@@ -1,0 +1,4 @@
+- [Sea Shader 学习计划](sea-shader-study-plan.md) — 用户正在学习 Seascape 海面shader，5阶段16天计划
+- [Toon Shader 学习计划](toon-shader-study-plan.md) — 用户正在学习 Unity URP Toon Lit Shader，4阶段14天计划
+- [输出模式：Markdown 按分类目录](output-mode-md-by-category.md) — 每次教学输出以 Markdown 文件按学习类型分目录保存
+- [软件工程学习进度](software-engineering-study.md) — SOLID 五原则已完成，正在学习设计模式（策略模式）
