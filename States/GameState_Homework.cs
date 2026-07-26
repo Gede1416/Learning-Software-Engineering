@@ -23,6 +23,7 @@ public class MainMenuState : IGameState
     public void Enter(GameManager gm)
     {
         // TODO: 打印 "进入 MainMenu 状态"
+        
     }
 
     public void Update(GameManager gm)

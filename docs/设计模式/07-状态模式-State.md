@@ -312,6 +312,105 @@ if (boss.HP < boss.MaxHP * 0.3f)
 | 已有代码 | 每一个 case 都要加 `if (HP < 30%) → go Berserk` | 只改需要切狂暴的状态 |
 | 每个状态行数 | BossAI.Update() = 100+ 行 | 每个状态文件 < 30 行 |
 
+### 3.4 基本状态模式的局限 —— 你的批判（2026-07-24）
+
+你发现了一个 GoF 状态模式藏起来的问题：
+
+> **加狂暴状态，虽然只加了 1 个新类，但「HP < 30% → Berserk」这个切换条件还是要写进 Patrol、Chase、Attack、Idle 四个类的 Update 里。霰弹枪并没有消失，只是从「一个 switch 的 N 个 case」变成了「N 个类各加 3 行」。**
+
+对——**基本状态模式消除了「行为」的耦合，没有消除「横切切换条件」的重复。**
+
+### 3.5 解法：Transition 层分离 —— 你的方案
+
+> "在 Update 触发前进行判断，单独抽离状态判断逻辑，让 Update 只进行行为逻辑。"
+
+这就是 **Transition Table（转换表）**——把切换条件从 State 里拆出来，集中管理：
+
+```csharp
+// Transition —— 独立的切换规则
+public class Transition
+{
+    public Type From;       // 从哪个状态触发（null = 任意状态，即 Global Transition）
+    public IBossState To;   // 切换到哪个状态
+    public Func<BossAI, bool> Condition;  // 切换条件
+}
+
+public class BossAI : MonoBehaviour
+{
+    private List<Transition> _transitions = new();
+
+    void Start()
+    {
+        // 全局 Transition：HP < 30% → 狂暴（优先级最高，放最前面）
+        _transitions.Add(new Transition
+        {
+            From = null,  // null = Any State
+            To = new BerserkState(),
+            Condition = ctx => ctx.HP < ctx.MaxHP * 0.3f
+        });
+
+        // 局部 Transition：巡逻 → 看到玩家 → 追击
+        _transitions.Add(new Transition
+        {
+            From = typeof(PatrolState),
+            To = new ChaseState(),
+            Condition = ctx => ctx.CanSeePlayer()
+        });
+    }
+
+    void Update()
+    {
+        // ① 先匹配 Transition —— 独立于状态的切换判断层
+        foreach (var t in _transitions)
+        {
+            if (t.From != null && _currentState.GetType() != t.From)
+                continue;
+            if (t.Condition(this))
+            {
+                SetState(t.To);
+                break;  // 一帧只切一次
+            }
+        }
+
+        // ② 再跑行为 —— State.Update 里只有纯逻辑，没有切换
+        _currentState.Update(this);
+    }
+}
+```
+
+```csharp
+// 状态类变干净了——只做行为，不管切换
+public class PatrolState : IBossState
+{
+    public void Update(BossAI boss)
+    {
+        boss.MoveAlongPath();  // ← 只有行为。切换条件全在 Transition 表里。
+    }
+}
+```
+
+**现在加「狂暴」只需要一条 Transition，不碰任何已有状态类：**
+
+```csharp
+_transitions.Insert(0, new Transition {
+    From = null, To = new BerserkState(),
+    Condition = ctx => ctx.HP < ctx.MaxHP * 0.3f
+});
+// Patrol/Chase/Attack/Idle —— 零行修改。霰弹枪消失了。
+```
+
+| 概念 | 业界叫法 | Unity 对应 |
+|------|----------|------------|
+| Transition 独立于 State | **Transition Table / Rule-based FSM** | Animator 的 Transition 连线 |
+| From = null 的全局切换 | **Global Transition / Any-State Transition** | Animator 的 "Any State" 节点 |
+| 按注册顺序匹配 | **Transition Priority** | Animator 的 Transition 排序 |
+
+### 3.6 代价
+
+Transition 集中管理后，**优先级变得重要**：如果「HP < 30% → Berserk」和「CanSeePlayer → Chase」同时满足，谁先触发？你需要明确的优先级规则（Global 优先于 Local，或按 `_transitions` 列表顺序）。
+
+另外，Transition 表的 Condition 全部依赖 `BossAI` 的数据（HP、距离），这意味着 Context 需要暴露足够多的属性供 Condition 读取——但这是合理的，Transition 层本来就是 Context 的"状态机配置"。
+
 ---
 
 ## 四、状态模式 vs 策略模式 —— 你的核心洞察
