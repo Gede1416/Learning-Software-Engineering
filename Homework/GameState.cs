@@ -1,4 +1,4 @@
-namespace StudyNotes.States;
+namespace StudyNotes.Homework;
 
 /// <summary>
 /// 状态模式作业：游戏主菜单状态机
@@ -17,7 +17,7 @@ public interface IGameState
 
 // ====== 四个状态类 ======
 
-// 主菜单——点击"开始游戏"→ Playing
+// 主菜单
 public class MainMenuState : IGameState
 {
     public void Enter(GameManager gm)
@@ -27,7 +27,7 @@ public class MainMenuState : IGameState
 
     public void Update(GameManager gm)
     {
-        var playingBtnFlag = true; // 模拟点击"开始游戏"
+        var playingBtnFlag = true;
         if (playingBtnFlag)
         {
             gm.SetState(new PlayingState());
@@ -40,7 +40,7 @@ public class MainMenuState : IGameState
     }
 }
 
-// 游戏中——按 ESC → Paused / 角色死亡 → GameOver
+// 游戏中
 public class PlayingState : IGameState
 {
     public void Enter(GameManager gm)
@@ -50,8 +50,8 @@ public class PlayingState : IGameState
 
     public void Update(GameManager gm)
     {
-        var playerDead = true;  // 模拟角色死亡
-        var ESCBtn = true;      // 模拟 ESC 键
+        var playerDead = true;
+        var ESCBtn = true;
 
         if (playerDead)
         {
@@ -71,7 +71,7 @@ public class PlayingState : IGameState
     }
 }
 
-// 暂停——按 ESC → Playing / 点击"退出"→ MainMenu
+// 暂停
 public class PausedState : IGameState
 {
     public void Enter(GameManager gm)
@@ -81,8 +81,8 @@ public class PausedState : IGameState
 
     public void Update(GameManager gm)
     {
-        var ESCBtn = true;    // 模拟 ESC 键
-        var exitBtn = true;   // 模拟点击"退出"
+        var ESCBtn = true;
+        var exitBtn = true;
 
         if (exitBtn)
         {
@@ -102,7 +102,7 @@ public class PausedState : IGameState
     }
 }
 
-// 游戏结束——点击"返回主菜单"→ MainMenu
+// 游戏结束
 public class GameOverState : IGameState
 {
     public void Enter(GameManager gm)
@@ -112,7 +112,7 @@ public class GameOverState : IGameState
 
     public void Update(GameManager gm)
     {
-        var backBtn = true; // 模拟点击"返回主菜单"
+        var backBtn = true;
         if (backBtn)
         {
             gm.SetState(new MainMenuState());
@@ -148,7 +148,6 @@ public class GameManager
         _currentState.Update(this);
     }
 
-    // 运行当前状态一次更新（模拟帧循环）
     public void Tick()
     {
         Update();
@@ -158,9 +157,7 @@ public class GameManager
 // ====== 思考题 ======
 // 状态模式的 Update(ctx) 参数里传 Context，
 // 会不会让状态和 Context 耦合过紧？
-// 有没有更好的办法？（提示：接口隔离原则 ISP）
 //
 // 答案：抽象出 ISetState 接口，在 Update 中切换时调用 ISetState.SetState(...);
 //       在初始化时注入 ISetState 接口，避免 State 依赖整个 GameManager。
 //       状态实例也可以通过抽象工厂去创建，来避免或减少 GC。
-// _____________________________________________________________
