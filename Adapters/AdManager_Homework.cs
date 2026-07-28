@@ -36,6 +36,7 @@ public class BytedanceAdAdapter : IRewardAdService
     public void ShowRewardAd(Action onComplete)
     {
         // TODO: 把统一接口翻译成穿山甲的调用方式
+        BytedanceAd.ShowRewardVideo(_placementId, onComplete);
     }
 }
 
@@ -59,6 +60,8 @@ public class YLHAdAdapter : IRewardAdService
     public void ShowRewardAd(Action onComplete)
     {
         // TODO: 把统一接口翻译成优量汇的调用方式
+        YLHAd.LoadAndShow("type", new YLHAd.YLHConfig { placementId = _placementId });
+        onComplete?.Invoke();
     }
 }
 
@@ -79,6 +82,7 @@ public class AdManager
     public void ShowRewardAd(Action onRewardGranted)
     {
         // TODO: 委托给 _rewardAdService，加上埋点/日志等通用逻辑
+        _rewardAdService.ShowRewardAd(onRewardGranted);
     }
 
     // 切换 SDK 只改这一处注入：
@@ -93,5 +97,7 @@ public class AdManager
 // Facade（AdManager）：需要加 ShowInterstitial() 方法和对应的 IService
 // Adapter：需要新建 IInterstitialAdService 接口 + 两个新 Adapter
 //
-// 你的答案：
+// 你的答案：加一个新的广告类型 外观需要添加新的接口 和调用 
+// 适配器由于管理的 是一个类型的广告那么就需要 天机一个新的类型的广告适配器 并处理他们之间的转换
+// 你是不是已经在上面已经把答案写给我了
 // _____________________________________________________________
