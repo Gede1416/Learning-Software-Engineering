@@ -34,11 +34,16 @@ namespace StudyNotes.Homework
         public void Add(ICombatUnit unit)
         {
             // TODO
+            _members.Add(unit);
         }
 
         public void ApplyBuff(string buffName)
         {
             // TODO: 遍历 _members，每个成员递归调用 ApplyBuff
+            foreach (var unit in _members)
+            {
+                unit.ApplyBuff(buffName);
+            }
         }
     }
 
@@ -47,5 +52,9 @@ namespace StudyNotes.Homework
     // 当前递归分发 ApplyBuff 的方案怎么改？
     //
     // 你的答案：
+    // 容器分类 职业容器 按照职业应用
+    // 接口 实现判断 buff再添加
+    // 问题是如果添加不同的buff都要继续进行判断 
+    // 能不能把buff变成 抽象接口 应用buff 和 buff添加前提判断
     // _____________________________________________________________
 }
