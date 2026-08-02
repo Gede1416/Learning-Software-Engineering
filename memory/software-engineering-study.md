@@ -36,13 +36,15 @@ metadata:
 ### 重构（2026-08-03 开始，阶段三）
 教材：《重构：改善既有代码的设计》— Martin Fowler
 - Day 1：坏味道「神秘命名」（Mysterious Name）✓ — 作业验收通过（2026-08-03）
-- Day 2：坏味道「重复代码」（Duplicated Code）— 进行中
+- Day 2：坏味道「重复代码」（Duplicated Code）✓ — 作业验收通过（2026-08-03）
+- Day 3：坏味道「过长函数」（Long Function）— 进行中
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
+- docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：回答 Day 2 苏格拉底问题 → 标准解 → 进入下一个坏味道
+**下一步**：回答 Day 3 苏格拉底问题 → 标准解 → 进入下一个坏味道
 
 ---
 
