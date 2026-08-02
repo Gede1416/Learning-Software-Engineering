@@ -116,20 +116,20 @@ namespace StudyNotes.Homework.MVC
         }
     }
 
-    public class AIPlayerMnager
+    public class AIPlayerManager
     {
         private Player _player;
-        private IController usePotionController;
+        private IController _controller;
 
         public void Init(Player player)
         {
             _player = player;
-            usePotionController = new AIController();
+            _controller = new AIController();
         }
 
         public void Update()
         {
-            usePotionController.HandleInput(_player);
+            _controller.HandleInput(_player);
         }
     }
 

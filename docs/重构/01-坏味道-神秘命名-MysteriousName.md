@@ -87,6 +87,16 @@ public class AIPlayerManager
 2. 动手修复 [Homework/MvcDemo.cs](Homework/MvcDemo.cs) 里的命名——**铁律：只改名字，不改任何行为**
 3. 完成骨架 [Homework/DailyRewardSystem.cs](Homework/DailyRewardSystem.cs) 里的 TODO
 
+## 六、作业验收（2026-08-03）
+
+- MvcDemo.cs：`AIPlayerMnager` → `AIPlayerManager`、`usePotionController` → `_controller` ✅ 编译通过（0 错误）
+- DailyRewardSystem.cs 四轮修正全部通过：
+  1. 改名 `R()` → `Reward()`、`G()` → `AllRewardCount()` ✅
+  2. 删除撒谎的 `hp` 字段 ✅
+  3. 引入 `IReward` 策略并接线 `_reward.Reward(this)`（阶段二知识迁移，替代硬编码）✅
+  4. `Init` 转 public 消除 NRE 隐患；清除全部悬空 TODO 注释 ✅
+- 教训：注释描述的对象不存在后，注释本身就在撒谎——与「神秘命名」同源的坏味道。
+
 ---
 
-`[进度：阶段三-重构 → Day 1「神秘命名」进行中]`
+`[进度：阶段三-重构 → Day 1「神秘命名」✓（作业验收通过 2026-08-03）]`

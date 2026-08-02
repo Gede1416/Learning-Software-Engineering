@@ -10,20 +10,46 @@ namespace StudyNotes.Homework.Refactor
     /// </summary>
     public class DailyRewardSystem
     {
+        private IReward _reward;
         public int gold;
         public int xp;
-        public int hp;          // TODO: 任务奖励系统里出现 hp，这名字在说什么？
 
-        public void R()         // TODO: R 是谁？三个月后的你还认识它吗？
+        public void Init(IReward reward)
         {
-            gold += 100;
-            xp += 50;
-            // TODO: 如果明天策划要加「奖励计算 ×2 双倍日」，你要在哪里改？
+            _reward = reward;
         }
 
-        public int G()          // TODO: G？
+        public void Reward()
+        {
+            _reward.Reward(this);
+        }
+
+        public int AllRewardCount()
         {
             return gold + xp;
+        }
+    }
+
+    public interface IReward
+    {
+        public void Reward(DailyRewardSystem dailyRewardSystem);
+    }
+
+    public class NormalReward : IReward
+    {
+        public void Reward(DailyRewardSystem dailyRewardSystem)
+        {
+            dailyRewardSystem.gold += 100;
+            dailyRewardSystem.xp += 50;
+        }
+    }
+
+    public class DoubleReward : IReward
+    {
+        public void Reward(DailyRewardSystem dailyRewardSystem)
+        {
+            dailyRewardSystem.gold += 100 * 2;
+            dailyRewardSystem.xp += 50 * 2;
         }
     }
 }
