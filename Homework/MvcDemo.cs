@@ -1,6 +1,6 @@
 using System;
 
-namespace StudyNotes.Homework
+namespace StudyNotes.Homework.MVC
 {
     /// <summary>
     /// MVC 收官作业：双视图 + 可换控制器
@@ -79,10 +79,30 @@ namespace StudyNotes.Homework
     // 订阅同一个 Player.OnHpChanged，输出一行 "迷你血条: HP=xx"
     public class MiniHpBar
     {
+        private UIPanel _uiPanel = new();
+        private UIMinHp _uiMinHp;
         public MiniHpBar(Player player)
         {
             // TODO: 订阅 player.OnHpChanged，每次变化打印一行迷你血条
+            _uiMinHp = new UIMinHp(player);
+            _uiPanel.Add(_uiMinHp);
+            player.OnHpChanged += (_) =>
+            {
+                _uiMinHp.hp = _;
+                _uiPanel.Draw();
+            };
         }
+    }
+
+    public class UIMinHp : UIElement
+    {
+        public UIMinHp(Player player)
+        {
+            _player = player;
+        }
+        private Player _player;
+        public int hp;
+        public override void Draw() => Console.WriteLine($" {hp}  {_player.Hp}");
     }
 
     // ====== TODO 2：换控制器 — AI 自动喝药 ======
@@ -92,6 +112,24 @@ namespace StudyNotes.Homework
         public void HandleInput(Player player)
         {
             // TODO: 每帧自动喝药
+            player.UsePotion();
+        }
+    }
+
+    public class AIPlayerMnager
+    {
+        private Player _player;
+        private IController usePotionController;
+
+        public void Init(Player player)
+        {
+            _player = player;
+            usePotionController = new AIController();
+        }
+
+        public void Update()
+        {
+            usePotionController.HandleInput(_player);
         }
     }
 
