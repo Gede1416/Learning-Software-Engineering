@@ -42,22 +42,123 @@ public class PlayerStatusUI
 
 ---
 
-## 三、你的回答（日期）
+## 三、你的回答（2026-08-02）
 
-（待填）
-
----
-
-## 四、标准解
-
-（待填）
+1. **全部逻辑放在 Update 里违反 SRP；UI 会最快崩、最频繁改动** ✅ — 正确：一肩挑违反单一职责；UI 是变化最频繁的部分，崩盘点就在这。
+2. **变化频率从高到低：UI → 输入操作 → 数据** ✅ — 教科书级的判断（Head First 原话：视图最容易变，模型最稳定）。
+3. **数据模块注册变化事件通知 UI（观察者）；输入用事件总线抽离（观察者变体）；UI 模块用接口抽离；Player 拆成 数据模块 / 操作事件接收器 / UI 展示接口** ⚠️→✅ — M/V/C 三分拆对了，观察者用对了两次；但题目点名的三个模式只用了观察者一个——**策略和组合还没有归宿**（待补）。
+4. **策略：换掉外部操作触发器（控制器），不改动视图/模型** ✅ — 控制器是可整体替换的行为对象，视图把它当策略持有——正中。
+5. **组合：Player 被多个 UI 关心，用组合 + 迭代器统一刷新 UI 元素树** ✅ — UI 元素组织成树（Panel 装 Text/Button），递归遍历刷新；第十章两件套直接用上。
 
 ---
 
-## 五、作业
+## 四、标准解 —— MVC = 观察者 + 策略 + 组合
 
-（待填）
+MVC 不是 GoF 的 23 个模式之一（Head First 第 14 章称其为**复合模式**）——它是你学过的模式的合体：
+
+| 角色 | 模式 | 职责 |
+|------|------|------|
+| **模型 Model** | 被观察者（观察者） | 存数据 + 业务规则，**不知道任何 UI 存在** |
+| **视图 View** | 观察者 + 组合 | 订阅模型事件；UI 元素树递归渲染 |
+| **控制器 Controller** | 策略 | 接收输入 → 调模型；可整体替换（键盘/触屏/AI） |
+
+```csharp
+// ====== ① 模型（被观察者，不知道 UI 存在）======
+public class Player
+{
+    public int Hp { get; private set; } = 100;
+    public int Mp { get; private set; } = 100;
+
+    public event Action<int> OnHpChanged;   // ← 观察者：数据变化通知
+    public event Action<int> OnMpChanged;
+
+    public void UsePotion() { Hp = Math.Min(Hp + 30, 100); OnHpChanged?.Invoke(Hp); }
+    public void CastSkill() { Mp -= 15; OnMpChanged?.Invoke(Mp); }
+    public void TakeDamage(int dmg) { Hp -= dmg; OnHpChanged?.Invoke(Hp); }
+}
+
+// ====== ② 控制器（策略：可整体替换的行为对象）======
+public interface IController
+{
+    void HandleInput(Player player);
+}
+
+public class KeyboardController : IController
+{
+    public void HandleInput(Player player)
+    {
+        if (Input.GetKeyDown(KeyCode.H)) player.UsePotion();
+        if (Input.GetKeyDown(KeyCode.J)) player.CastSkill();
+    }
+}
+
+public class TouchController : IController { /* 触屏按钮 → 同样调 player.UsePotion() */ }
+public class AIController    : IController { /* 自动战斗 */ }
+
+// ====== ③ 视图（观察者 + 组合：UI 元素树）======
+public abstract class UIElement          // ← 组合：叶子/容器统一接口
+{
+    public abstract void Draw();
+}
+
+public class UIText : UIElement          // 叶子
+{
+    public string Text;
+    public override void Draw() => DrawText(Text);
+}
+
+public class UIPanel : UIElement         // 容器
+{
+    private List<UIElement> _children = new();
+    public void Add(UIElement e) => _children.Add(e);
+    public override void Draw() { foreach (var c in _children) c.Draw(); }  // 递归刷新
+}
+
+// 视图本体：订阅模型 + 持有控制器策略
+public class PlayerStatusUI
+{
+    private Player _player;
+    private IController _controller = new KeyboardController();   // ← 策略，想换就换
+    private UIPanel _root = new();
+    private UIText _hpText = new();
+
+    public PlayerStatusUI(Player player)
+    {
+        _player = player;
+        _root.Add(_hpText);
+        _player.OnHpChanged += hp => _hpText.Text = $"HP: {hp}/100";   // ← 观察者：只刷新对应元素
+    }
+
+    public void Update()
+    {
+        _controller.HandleInput(_player);  // 输入 → 控制器（策略）
+        _root.Draw();                      // 渲染 → 组合树递归
+    }
+}
+```
+
+### 你的两个答案怎么落进标准解
+
+- 「换掉外部操作触发器」= 换 `_controller` 字段——视图和模型一个字节都不改，这就是策略。
+- 「组合+迭代统一刷新」= `UIPanel.Draw()` 递归遍历子树——第十章的两件套在这合体。
+
+### 为什么 Q2 的频率排序是拆分的依据
+
+UI 天天改、输入偶尔改、数据几乎不改——所以三个对象按频率分层：改 UI 不动模型，改输入不动视图，数据变了只有关心它的人被通知（观察者）。这就是 MVC 的价值：**把变化频率不同的东西放进不同的类**。
 
 ---
 
-`[进度：设计模式-①策略 ✓ / ②观察者 ✓ / ③装饰器 ✓ / ④工厂 ✓ / ⑤单例 ✓ / ⑥命令 ✓ / ⑦状态 ✓ / ⑧适配器+外观 ✓ / ⑨模板方法 ✓ / ⑩迭代器+组合 ✓ 核心完成 / ⑪代理模式 ✓ / ⑫MVC → 提问中]`
+## 五、作业（预计 5-10 分钟）
+
+给上面的 MVC 骨架做**收官验证**——两个 TODO：
+
+1. **加第二个视图** `MiniHpBar`（小地图迷你血条）：订阅同一个 `Player.OnHpChanged`，模型一个字节不改
+2. **换控制器**：写一个 `AIController`（每帧自动喝药），插进 `PlayerStatusUI` 替换 `KeyboardController`，视图零改动
+
+验证：模型攻击一次 → 两个视图都收到事件；换控制器 → 行为变、视图不动。
+
+框架文件：[Homework/MvcDemo.cs](Homework/MvcDemo.cs)
+
+---
+
+`[进度：设计模式-①策略 ✓ / ②观察者 ✓ / ③装饰器 ✓ / ④工厂 ✓ / ⑤单例 ✓ / ⑥命令 ✓ / ⑦状态 ✓ / ⑧适配器+外观 ✓ / ⑨模板方法 ✓ / ⑩迭代器+组合 ✓ / ⑪代理模式 ✓ / ⑫MVC ✓ 核心讲解完成，等待作业]`
