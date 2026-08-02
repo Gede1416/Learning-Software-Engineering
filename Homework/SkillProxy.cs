@@ -1,5 +1,3 @@
-using System;
-
 namespace StudyNotes.Homework
 {
     /// <summary>
@@ -46,6 +44,20 @@ namespace StudyNotes.Homework
             // TODO 1: 蓝量 < 15 → 输出 "蓝量不足"，return
             // TODO 2: 距上次施放不足 3 秒（冷却中）→ 输出 "技能冷却中"，return
             // TODO 3: 检查通过 → 扣 15 蓝，记录 _lastCastSecond，委托 _real.Cast(caster, target)
+            if (caster.Mana < 15)
+            {
+                Console.WriteLine("蓝量不足，无法释放");
+                return;
+            }
+            if (_lastCastSecond < 3 && _lastCastSecond >= 0)
+            {
+                Console.WriteLine("技能正在冷却");
+                return;
+            }
+            caster.Mana -= 15;
+            _lastCastSecond = 0;
+
+            _real.Cast(caster, target);
         }
     }
 
