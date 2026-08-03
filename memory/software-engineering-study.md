@@ -38,14 +38,15 @@ metadata:
 - Day 1：坏味道「神秘命名」（Mysterious Name）✓ — 作业验收通过（2026-08-03）
 - Day 2：坏味道「重复代码」（Duplicated Code）✓ — 作业验收通过（2026-08-03）
 - Day 3：坏味道「过长函数」（Long Function）✅ — 两轮验收收官（need 捕获时机行为漂移 → 修复）
-- Day 4：坏味道「过长参数列表」（Long Parameter List）— 动手题 ✅ 第一轮验收通过（分组修正到位），**概念子问题待答**
+- Day 4：坏味道「过长参数列表」（Long Parameter List）✅ — 2026-08-03 收官（引入参数对象：编译期拦截 + 属性名代替参数顺序）
+- Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）— 进行中（作业骨架 Homework/GlobalScore.cs 已布置）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：回答 Day 4 苏格拉底问题（CastSkill 8 参数哪里崩）→ 引入参数对象 → 标准解 → Day 5 全局/可变数据
+**下一步**：回答 Day 5 苏格拉底问题（全局分数谁改了我的数据）→ 封装变量 → 标准解 → Day 6 发散式变化/霰弹式修改
 
 **记录约定**（2026-08-03 用户确认）：每次问答产生的纠错/标准解/子问题同步写入对应 md 笔记；进度同步到 prompt「当前学习状态」与本文件。
 
