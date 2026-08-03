@@ -104,8 +104,15 @@ private void NotifyLevelUp(Player p) { /* UI+音频+成就+存档，顺序不动
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮纠错 + 标准解）
-2. 把 `LevelUp` 拆成多个小函数——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
+2. 把 `LevelUp` 拆成多个小函数——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——✅ 两轮验收通过
 3. 骨架：[Homework/LevelUp.cs](Homework/LevelUp.cs)
+
+## 七、验收（2026-08-03，Day 3 收官）
+
+- 第一轮：结构正确，但有一处**行为漂移**——原代码 `need` 只算一次（升级前），拆后 `player.Exp -= GetNeedExp(player)` 在 `Level++` 之后重新计算，读到升级后的等级。1 级 150 经验：原代码扣 150 剩 0；拆后扣 250 变 -100。
+- 第二轮修复：`needExp` 在入口算好一次，作为参数传入 `SetBaseValChange`——行为与原来完全一致 ✅
+- 命名：`BatterLevelUp`（typo）→ `BetterLevelUp` ✅；打磨建议（标准解水准）：`ApplyBaseGrowth` / `ApplyMilestoneBonus` / `ApplyGodMode` / `NotifyLevelUp`——函数名是路标，越具体越好。
+- 教训：拆函数时，**跨语句复用的局部变量**（`need` 被判断和扣减共用）最容易在提取时被拆坏——先看变量在哪几处被读、在哪一刻被读。
 
 ---
 

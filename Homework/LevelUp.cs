@@ -1,6 +1,6 @@
 using System;
 
-namespace StudyNotes.Homework.Refactor
+namespace StudyNotes.Homework.Refactor.Level
 {
     /// <summary>
     /// 重构 Day 3 作业：坏味道「过长函数」（Long Function）
@@ -29,38 +29,62 @@ namespace StudyNotes.Homework.Refactor
 
     public class LevelUpSystem
     {
-        // TODO: 这个函数做了几件事？每件事是不是可以是一个小函数？
         public void LevelUp(Player player)
-        {
-            int need = player.Level * 100 + 50;
-            if (player.Exp >= need)
+        {    
+            int needExp = GetNeedExp(player);
+            if (player.Exp >= needExp)
             {
-                player.Level++;
-                player.Exp -= need;
-                player.MaxHp += 20;
-                player.Hp = player.MaxHp;
-                player.MaxMp += 10;
-                player.Mp = player.MaxMp;
-                player.Atk += 5;
-                player.Def += 3;
+                SetBaseValLevelUp(player, needExp);
                 if (player.Level % 10 == 0)
                 {
-                    player.MaxHp += 50;
-                    player.MaxMp += 30;
-                    player.Atk += 15;
-                    player.Def += 8;
-                    player.SkillPoints += 3;
+                    SetBetterLevelUp(player);
                 }
                 if (player.Level == 100)
                 {
-                    player.HasGodMode = true;
-                    player.SkillPoints += 100;
+                    GodMode(player);
                 }
-                UIManager.ShowLevelUp(player.Level);
-                AudioManager.PlayLevelUp();
-                AchievementSystem.Unlock("level_" + player.Level);
-                SaveSystem.Save(player);
+                LevelUpEvent(player);
             }
+        }
+
+        private int GetNeedExp(Player player)
+        {
+            return player.Level * 100 + 50;
+        }
+        
+        private void SetBaseValLevelUp(Player player, int needExp)
+        {
+            player.Level++;
+            player.Exp -= needExp;
+            player.MaxHp += 20;
+            player.Hp = player.MaxHp;
+            player.MaxMp += 10;
+            player.Mp = player.MaxMp;
+            player.Atk += 5;
+            player.Def += 3;
+        }
+        
+        private void SetBetterLevelUp(Player player)
+        {
+            player.MaxHp += 50;
+            player.MaxMp += 30;
+            player.Atk += 15;
+            player.Def += 8;
+            player.SkillPoints += 3;
+        }
+
+        private void GodMode(Player player)
+        {
+            player.HasGodMode = true;
+            player.SkillPoints += 100;
+        }
+
+        private void LevelUpEvent(Player player)
+        {
+            UIManager.ShowLevelUp(player.Level);
+            AudioManager.PlayLevelUp();
+            AchievementSystem.Unlock("level_" + player.Level);
+            SaveSystem.Save(player);
         }
     }
 }
