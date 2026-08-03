@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(env)",
+      "Bash(curl -x http://127.0.0.1:7890 -sI --connect-timeout 5 https://github.com)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(curl -x http://127.0.0.1:7890 -sI --connect-timeout 5 -o /dev/null -w \"local proxy: %{http_code}\\\\n\" https://github.com)",
+      "Bash(echo \"curl_exit=$?\")",
+      "Bash(curl -sI --connect-timeout 5 -o /dev/null -w \"direct: %{http_code}\\\\n\" https://github.com)",
+      "Bash(echo \"curl_exit2=$?\")",
+      "Bash(curl -x http://127.0.0.1:7890 -sI --connect-timeout 5 -o /dev/null -w \"vpn proxy: %{http_code}\\\\n\" https://github.com)"
+    ]
+  }
+}
