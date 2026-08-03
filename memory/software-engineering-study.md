@@ -37,7 +37,7 @@ metadata:
 教材：《重构：改善既有代码的设计》— Martin Fowler
 - Day 1：坏味道「神秘命名」（Mysterious Name）✓ — 作业验收通过（2026-08-03）
 - Day 2：坏味道「重复代码」（Duplicated Code）✓ — 作业验收通过（2026-08-03）
-- Day 3：坏味道「过长函数」（Long Function）— 概念题已答（第一轮纠错后**子问题待答**），动手题未做
+- Day 3：坏味道「过长函数」（Long Function）— 概念题 ✅（标准解已给出），**动手题（LevelUp.cs 拆函数）未做**
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
