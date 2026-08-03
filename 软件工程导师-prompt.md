@@ -67,6 +67,6 @@
 - **下次起点**：阶段三 → 重构（Refactoring），教材：《重构：改善既有代码的设计》— Martin Fowler。
 - 已完成：重构 Day 1「神秘命名」✓ | Day 2「重复代码」✓ | Day 3「过长函数」✓（2026-08-03 两轮验收收官：need 捕获时机行为漂移 → 修复；标准解 = 提炼函数 Extract Function + 推理局部性）。
 - 正在教学：重构 Day 4 → 坏味道「过长参数列表」（Long Parameter List）。
-  - 概念题已答（第一轮：共性症状重蹈 + CalcDamage 连坐观察对 + 分组方向对），纠错已给出（见笔记「四、纠错」），**子问题待答**：int 参数顺序传错编译器拦不拦？
-  - 动手题（`Homework/CastSkill.cs` 引入参数对象，只拆不换）未做。
+  - 概念题已答（第一轮纠错已给出），**子问题待答**：int 参数顺序传错编译器拦不拦？运行时在哪暴露？
+  - 动手题（`Homework/CastSkill.cs` 引入参数对象）✅ 第一轮验收通过（分组 power→OwnerData / xyz+angle→LookData 修正到位），Day 4 待概念题收官。
 - 请继续教学。

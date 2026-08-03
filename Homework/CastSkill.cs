@@ -15,27 +15,56 @@ namespace StudyNotes.Homework.Refactor.Cast
         public void TakeDamage(int dmg) { Hp -= dmg; }
     }
 
+    //技能基础数据
+    public class SkillData
+    {
+        public int skillId;
+        public int level;//技能等级 要是玩家等级的话放在OwnerData中
+
+    }
+
+    //技能拥有者数据
+    public class OwnerData
+    {
+        public int Id;
+        public int power;
+        public string source; //技能消耗资源
+    }
+
+    //释放表现数据
+    public class LookData
+    {
+        public int x;
+        public int y;
+        public float angle;
+    }
+
+    //技能目标数据
+    public class TargetData
+    {
+        public int targetId;
+    }
+
     public static class FxManager { public static void Play(string fx, int x, int y, float angle) { } }
     public static class SoundManager { public static void Play(string clip) { } }
 
     public class SkillSystem
     {
-        private bool SkillUnlocked(int skillId, int level, string source) => true;
-        private Enemy FindEnemy(int targetId) => null;
-        private int CalcDamage(int skillId, int level, int power) => skillId * level + power;
+        private bool SkillUnlocked(SkillData skillData, OwnerData ownerData) => true;
+        private Enemy FindEnemy(TargetData targetData) => null;
+        private int CalcDamage(SkillData skillData, OwnerData ownerData) => skillData.skillId * skillData.level + ownerData.power;
 
         // TODO: 8 个参数——哪几伙天生是一伙的？把它们包成一个对象传进来。
-        public void CastSkill(int skillId, int level, int x, int y,
-                              int targetId, float angle, int power, string source)
+        public void CastSkill(TargetData targetData, LookData lookData, SkillData skillData, OwnerData ownerData)
         {
-            if (!SkillUnlocked(skillId, level, source)) return;
-            if (targetId < 0) return;
-            Enemy target = FindEnemy(targetId);
+            if (!SkillUnlocked(skillData, ownerData)) return;
+            if (targetData.targetId < 0) return;
+            Enemy target = FindEnemy(targetData);
             if (target == null) return;
-            int dmg = CalcDamage(skillId, level, power);
+            int dmg = CalcDamage(skillData, ownerData);
             target.TakeDamage(dmg);
-            FxManager.Play("skill_" + skillId, x, y, angle);
-            SoundManager.Play("cast_" + skillId);
+            FxManager.Play("skill_" + skillData.skillId, lookData.x, lookData.y, lookData.angle);
+            SoundManager.Play("cast_" + skillData.skillId);
         }
     }
 }

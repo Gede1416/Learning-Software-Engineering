@@ -52,9 +52,16 @@ public class SkillSystem
 
 ## 六、作业（预计 5-10 分钟）
 
-1. ~~回答上面的问题~~ 概念题已答，待按子问题修正
-2. 把 `CastSkill` 的参数用**引入参数对象（Introduce Parameter Object）**收拢——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
+1. ~~回答上面的问题~~ 概念题已答，**子问题待答**（编译器拦不拦顺序传错？）
+2. 把 `CastSkill` 的参数用**引入参数对象（Introduce Parameter Object）**收拢——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——✅ **已做**
 3. 骨架：[Homework/CastSkill.cs](Homework/CastSkill.cs)
+
+## 七、验收记录（第一轮，2026-08-03）
+
+- 编译 0 错误；数值（CalcDamage 公式）、分支条件、调用顺序全部保持 ✓
+- 分组修正到位：`power` → `OwnerData`（伤害数据），`x/y/angle` → `LookData`（表现数据），`skillId/level` → `SkillData`，`targetId` → `TargetData`——符合「同生共死」标准 ✓
+- 待打磨：文件头 TODO 残留；`OwnerData.Id` 未使用（数据占位）
+- 概念子问题（int 传错顺序编译器拦不拦）**未答**——Day 4 未收官
 
 ---
 
