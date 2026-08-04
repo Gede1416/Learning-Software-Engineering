@@ -45,12 +45,12 @@ namespace StudyNotes.Homework.Refactor.Hero
 
     public struct HeroData
     {
-        public static readonly Dictionary<string, HeroData> HeroTable = new()
-        {
-            {"战士", new HeroData{Name = "战士", Hp = 100, Icon = "sword.png"}},
-            {"法师", new HeroData{Name = "法师", Hp = 60, Icon = "staff.png"}},
-            {"路人", new HeroData{Name = "路人", Hp = 40, Icon = "default.png"}}
-        };
+        //战士
+        public static readonly HeroData Warrior = new HeroData{Name = "战士", Hp = 100, Icon = "sword.png"};
+        //法师
+        public static readonly HeroData Mage = new HeroData{Name = "法师", Hp = 60, Icon = "staff.png"};
+        //路人
+        public static readonly HeroData Civilian = new HeroData{Name = "路人", Hp = 40, Icon = "default.png"};
 
         public string Name { get; set; }
         public int Hp { get; set; }
@@ -69,9 +69,9 @@ namespace StudyNotes.Homework.Refactor.Hero
     {
         private readonly static Dictionary<string,Hero> keyValues = new Dictionary<string, Hero>
         {
-            {"战士", new Hero{heroData = HeroData.HeroTable["战士"],heroAI = new WarriorAI()}},
-            {"法师", new Hero{heroData = HeroData.HeroTable["法师"],heroAI = new MageAI()}},
-            {"路人", new Hero{heroData = HeroData.HeroTable["路人"],heroAI = new CivilianAI()}}
+            {"战士", new Hero{heroData = HeroData.Warrior, heroAI = new WarriorAI()}},
+            {"法师", new Hero{heroData = HeroData.Mage,heroAI = new MageAI()}},
+            {"路人", new Hero{heroData = HeroData.Civilian, heroAI = new CivilianAI()}}
         };
 
         public Hero Create(string type)

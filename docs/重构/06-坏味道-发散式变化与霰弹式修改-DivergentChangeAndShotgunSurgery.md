@@ -79,6 +79,10 @@ HeroData struct + HeroTable 字典（只存 2 行）+ Factory 仍 switch + Warri
 
 按清单落实 4.5/6：路人回归 ✅ 法师 60 ✅ icon 原值 ✅ Factory 查表 ✅ 中文键 ✅；AI 类未删 ❌ 两表并存 ❌
 
+### 第六轮（动手题第五轮）
+
+HeroTable 字典改为 HeroData 三个静态字段（Warrior/Mage/Civilian）；AI 类、WriteLine、keyValues 第二表均未删——上轮 2 项要求一处未动，且字典→静态字段属反向改动
+
 ## 四、纠错（第一轮，2026-08-03）
 
 - 第 1、3 点 ✅：识别出「加英雄 → AI/Icon/Factory 三个文件一起改」= **霰弹式修改**（一个原因，N 处修改）。
@@ -170,10 +174,12 @@ public class HeroIcon
 1. **AI 类未删**：WarriorAI/MageAI/CivilianAI/IHeroAI 仍在，`WriteLine` 发明行为（原版注释占位，直建 Hero 原版无行为、新版喊「路人AI」）
 2. **两张表并存**：HeroTable + keyValues，加英雄仍 3 处——霰弹枪未治好；标准解单表 + AI 回 if/else 注释
 
+**动手题第五轮验收 ❌（2026-08-03）**：上轮 2 项要求一处未动（AI 类 + WriteLine 仍在、keyValues 第二表仍在），且把字典改回静态字段（加英雄从「加一行」变「改代码」，反向改动）。→ **终版文件已给出**（单表 HeroTable + AI 注释占位），照抄即收官。
+
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮 + 标准解）
-2. 收敛成表——**第四轮 ⚠️ 接近收官**：删 AI 类、删第二张表、`Update` 回注释占位，即收官
+2. 收敛成表——**第五轮未过** → 终版文件已给出，**照抄收官**
 3. 骨架：[Homework/重构/HeroSystem.cs](Homework/重构/HeroSystem.cs)
 
 ---
