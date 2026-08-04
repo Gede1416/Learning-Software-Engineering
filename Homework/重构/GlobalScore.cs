@@ -1,5 +1,4 @@
 using System;
-using System.Reflection.Metadata;
 
 namespace StudyNotes.Homework.Refactor.Global
 {
@@ -15,34 +14,35 @@ namespace StudyNotes.Homework.Refactor.Global
         public void TakeDamage(int dmg) { Hp -= dmg; }
     }
 
+    // TODO: Score / Difficulty 是全局可变字段——谁都能读、谁都能写。
     // 把它们收进私有字段，只留属性和方法访问（可加保护：分数不能为负）。
     public static class GameState
     {
-        private static int _score;        // 全局分数
-        private static int _difficulty;   // 全局难度
+        public static int _score;        // 全局分数
+        public static int _difficulty;   // 全局难度
         public static int Score
         {
-            get { return _score; }
+            get
+            {
+                return _score;
+            }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException();
+                if( value < 0)
+                {
+                    throw new Exception("分数不能为负");
+                }
                 _score = value;
-                if (_score > 1000) {
-                    Difficulty = 3;
-                }
-                if(_score > 99999) {
-                    _score = 99999;
-                    Console.WriteLine("分数上限 99999");
-                }
             }
         }
         public static int Difficulty
         {
-            get { return _difficulty; }
+            get
+            {
+                return _difficulty;
+            }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException();
-                if( value >= 3) Console.WriteLine("怪物强化");
                 _difficulty = value;
             }
         }
@@ -53,6 +53,10 @@ namespace StudyNotes.Homework.Refactor.Global
         public void OnEnemyKilled(int value)
         {
             GameState.Score += value;
+            if (GameState.Score > 10000)
+            {
+                GameState.Difficulty = 3;
+            }
         }
     }
 

@@ -39,7 +39,7 @@ metadata:
 - Day 2：坏味道「重复代码」（Duplicated Code）✓ — 作业验收通过（2026-08-03）
 - Day 3：坏味道「过长函数」（Long Function）✅ — 两轮验收收官（need 捕获时机行为漂移 → 修复）
 - Day 4：坏味道「过长参数列表」（Long Parameter List）✅ — 2026-08-03 收官（引入参数对象：编译期拦截 + 属性名代替参数顺序）
-- Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）— 概念子问题已答（半对），**动手题第一轮未过**（三处铁律违规待修）
+- Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）— 两轮验收后标准解已给出，**剩 2 处微修复**（private + 撤回 throw）待收官
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
