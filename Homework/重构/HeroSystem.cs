@@ -33,37 +33,24 @@ namespace StudyNotes.Homework.Refactor.Hero
             Console.WriteLine("法师AI");
         }
     }
-
-    public abstract class Hero
+    
+    public struct HeroData
     {
-        public string Name;
+        public static readonly Dictionary<string, HeroData> HeroTable = new()
+        {
+            {"Warrior", new HeroData{Name = "战士", Hp = 100, icon = "WarriorIcon"}},
+            {"Mage", new HeroData{Name = "法师", Hp = 80, icon = "MageIcon"}},
+        };
+
+        public string Name { get; set; }
+        public int Hp { get; set; }
         public string icon;
-        public int Hp;
-        public virtual void AIAction(){
-            Console.WriteLine("英雄AI");
-        }
     }
 
-    //战士
-    public class Warrior : Hero
+    public class Hero
     {
-        public Warrior()
-        {
-            Name = "战士";
-            icon = "战士";
-            Hp = 100;
-        }
-    }
-
-    //法师
-    public class Mage : Hero
-    {
-        public Mage()
-        {
-            Name = "法师";
-            icon = "法师";
-            Hp = 60;
-        }
+        public HeroData heroData;
+        public IHeroAI heroAI;
     }
 
     // TODO: 加一个英雄要改 3 个文件（Factory / AI / Icon）。
@@ -74,9 +61,9 @@ namespace StudyNotes.Homework.Refactor.Hero
         {
             switch (type)
             {
-                case "战士": return new Warrior();
-                case "法师": return new Mage();
-                default:     return new Warrior();
+                case "战士": return new Hero{heroData = HeroData.HeroTable["Warrior"],heroAI = new WarriorAI()};
+                case "法师": return new Hero{heroData = HeroData.HeroTable["Mage"],heroAI = new MageAI()};
+                default:     return new Hero();
             }
         }
     }
@@ -85,12 +72,12 @@ namespace StudyNotes.Homework.Refactor.Hero
     {
         public void Update(Hero hero)
         {
-            hero.AIAction();
+            hero.heroAI.HeroAIAction();
         }
     }
 
     public class HeroIcon
     {
-        public string GetIcon(Hero hero) => hero.icon;
+        public string GetIcon(Hero hero) => hero.heroData.icon;
     }
 }

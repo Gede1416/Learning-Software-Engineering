@@ -71,6 +71,10 @@ public class HeroIcon
 
 继承 + 子类方案：Warrior/Mage 继承抽象 Hero，构造器写死属性，Factory switch 返回子类
 
+### 第四轮（动手题第三轮）
+
+HeroData struct + HeroTable 字典（只存 2 行）+ Factory 仍 switch + WarriorAI/MageAI 复活
+
 ## 四、纠错（第一轮，2026-08-03）
 
 - 第 1、3 点 ✅：识别出「加英雄 → AI/Icon/Factory 三个文件一起改」= **霰弹式修改**（一个原因，N 处修改）。
@@ -146,10 +150,22 @@ public class HeroIcon
 
 对照铁律：路人回来了（40hp）、icon 原值（sword.png…）、AI 注释原样——**行为零变化**。加「刺客」= 表里加一行，Factory 零改动（`TryGetValue` 自动兜底路人）。三个系统只依赖表，霰弹枪变单发。
 
+**动手题第三轮验收 ❌（2026-08-03）**：8 项差距——
+1. 表只存 2 行，**路人消失**（原 default 路人 40hp）
+2. **法师 Hp 60 → 80**（数值错）
+3. icon 改存 `"WarriorIcon"`/`"MageIcon"`（原 sword.png 等，输出值变）
+4. Factory 仍 switch，**表没被用起来**；`default: new Hero()` 兜底 → heroData 全空 + heroAI null
+5. **直建/兜底 NRE 回归**：`HeroAI.Update` → `heroAI.HeroAIAction()` 空引用崩溃（第二轮 abstract 拦截被撤销）
+6. AI 发明行为（WriteLine）第三遍
+7. 表键英文 "Warrior"/"Mage" 与 switch 中文**双轨**
+8. struct 挂静态 Dictionary + 可变字段（反模式）
+
+**收尾要求**：不再发明新结构，按标准解逐行对照修改（6 条清单见对话记录）。
+
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮 + 标准解）
-2. 收敛成表——**第二轮未过**（默认值/icon 值被改、死代码、发明行为、未成表）→ 标准解已给出，**按标准解收官**
+2. 收敛成表——**三轮未过** → 标准解 + 8 项对照清单已给出，**按清单收官**
 3. 骨架：[Homework/重构/HeroSystem.cs](Homework/重构/HeroSystem.cs)
 
 ---
