@@ -41,7 +41,7 @@ metadata:
 - Day 4：坏味道「过长参数列表」（Long Parameter List）✅ — 2026-08-03 收官（引入参数对象：编译期拦截 + 属性名代替参数顺序）
 - Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）✅ — 2026-08-03 三轮验收收官（private 唯一闸口 + 行为零变化）
 - Day 6：坏味道「发散式变化 + 霰弹式修改」（Divergent Change / Shotgun Surgery）✅ — 2026-08-03 收官（概念 ✅；动手题用户选择跳过，终版存档于笔记，可回补）
-- Day 7：坏味道「依恋情结」（Feature Envy）— 概念题 ✅（标准解已给出：方法恋上谁就搬到谁家），**动手题未做**
+- Day 7：坏味道「依恋情结」（Feature Envy）— 概念题 ✅，动手题第一轮 ⚠️（搬移全对，**保底伤害 1→0 漂移**待改回）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
