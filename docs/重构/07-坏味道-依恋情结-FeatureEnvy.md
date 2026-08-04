@@ -35,10 +35,18 @@ public class DamageSystem
 
 ## 三、你的回答（2026-08-03）
 
+### 第一轮
+
 1. 更应该放在 Player 或 Enemy
 2. 没有使用到系统参数，只用 Player/Enemy 的数据
 3. 在方法内部增加局部变量，从敌人那获取，再改变公式
 4. 改攻击公式也要在 CalcPhysicalDamage 方法内部改
+
+### 第二轮（子问题）
+
+1. 把攻击力计算公式和受击计算公式拆分，策划可单独调整
+2. 玩家负责攻击力计算，敌人负责伤害计算——各自依赖自己的数据
+3. 中间传输 HitData 记录传递值，后续扩展在这个类里扩展
 
 ## 四、纠错（第一轮，2026-08-03）
 
@@ -47,16 +55,54 @@ public class DamageSystem
 - 第 3、4 点 ⚠️ 半对：感觉到了「改公式要进 CalcPhysicalDamage」，但没说清后果——攻击公式、防御公式、敌人加「格挡」**全都要进 DamageSystem 改**：数据住在 Player/Enemy 家，行为却住在 DamageSystem 家——这是 Day 6 的**发散式变化**现场（跨书联动）。
 - 缺：没回答「放哪边」。方法同时摸 Player（Atk/Weapon.Bonus/Level）与 Enemy（Def/Armor.Reduction/Level）两家的字段，但子公式各自只摸一家的数据。
 
-**待答子问题**：`Atk + Weapon.Bonus` 只摸 Player 家，`Def + Armor.Reduction` 只摸 Enemy 家。策划把攻击公式改成「Atk × 1.2 + Weapon.Bonus」——现在要改哪里？把「攻击值」搬给 Player 自己算，又要改哪里？哪个更局部？
+**子问题判定（第二轮，2026-08-03）**：✅ 通过——玩家负责攻击力计算、敌人负责伤害计算（各自依赖自家数据）、HitData 传递中间值（加分项，Day 4 联动）。概念题收官。
 
-## 五、标准解（待给出）
+## 五、标准解（2026-08-03 给出）
 
-（子问题回答正确后给出）
+Fowler《重构》第 8 章 Move Function 原则：**方法恋上谁，就搬到谁家**——方法应该和它用的数据住在一起。
+
+```csharp
+public class Player
+{
+    public int Atk;
+    public int Level;
+    public Weapon Weapon;
+
+    public int GetAttack() => Atk + Weapon.Bonus;   // 攻击公式住进 Player 家
+}
+
+public class Enemy
+{
+    public int Def;
+    public int Level;
+    public Armor Armor;
+
+    public int GetDefense() => Def + Armor.Reduction;  // 防御公式住进 Enemy 家
+
+    public int CalcDamageTaken(Player player)          // 受击结算住进数据最全的一方
+    {
+        int dmg = player.GetAttack() - GetDefense();
+        if (player.Level > Level)
+            dmg += (player.Level - Level) * 2;
+        return Math.Max(1, dmg);
+    }
+}
+
+public class DamageSystem
+{
+    // 从「所有战斗数值变化的集散地」缩成一行调度——或直接删掉
+    public int CalcPhysicalDamage(Player player, Enemy enemy)
+        => enemy.CalcDamageTaken(player);
+}
+```
+
+- 攻击公式改 → 只改 `Player.GetAttack`；防御公式改 → 只改 `Enemy.GetDefense`；加格挡 → 只改 Enemy——**全部局部**，发散式变化归零。
+- HitData 点评：多阶段战斗流程（结算前后钩子、伤害事件总线）里是好设计；简单流程直接返回值——别为一个 int 造对象（Day 4 铁律：参数对象要「同生共死」才值得建）。
 
 ## 六、作业（预计 5-10 分钟）
 
-1. ~~回答上面的问题~~ 概念题已答，待按子问题修正
-2. 用**搬移函数（Move Function）**把伤害计算搬回它该待的地方——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
+1. ~~回答上面的问题~~ 概念题 ✅（第二轮通过 + 标准解）
+2. 搬移函数——**未做**：按标准解落实 `GetAttack`/`GetDefense`/`CalcDamageTaken`
 3. 骨架：[Homework/重构/DamageSystem.cs](Homework/重构/DamageSystem.cs)
 
 ---
