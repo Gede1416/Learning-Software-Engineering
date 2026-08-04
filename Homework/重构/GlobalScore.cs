@@ -18,8 +18,8 @@ namespace StudyNotes.Homework.Refactor.Global
     // 把它们收进私有字段，只留属性和方法访问（可加保护：分数不能为负）。
     public static class GameState
     {
-        public static int _score;        // 全局分数
-        public static int _difficulty;   // 全局难度
+        private static int _score;        // 全局分数
+        private static int _difficulty;   // 全局难度
         public static int Score
         {
             get
@@ -28,10 +28,6 @@ namespace StudyNotes.Homework.Refactor.Global
             }
             set
             {
-                if( value < 0)
-                {
-                    throw new Exception("分数不能为负");
-                }
                 _score = value;
             }
         }
