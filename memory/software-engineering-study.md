@@ -41,14 +41,15 @@ metadata:
 - Day 4：坏味道「过长参数列表」（Long Parameter List）✅ — 2026-08-03 收官（引入参数对象：编译期拦截 + 属性名代替参数顺序）
 - Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）✅ — 2026-08-03 三轮验收收官（private 唯一闸口 + 行为零变化）
 - Day 6：坏味道「发散式变化 + 霰弹式修改」（Divergent Change / Shotgun Surgery）✅ — 2026-08-03 收官（概念 ✅；动手题用户选择跳过，终版存档于笔记，可回补）
-- Day 7：坏味道「依恋情结」（Feature Envy）— 概念题 ✅，动手题第一轮 ⚠️（搬移全对，**保底伤害 1→0 漂移**待改回）
+- Day 7：坏味道「依恋情结」（Feature Envy）✅ — 2026-08-03 收官（方法恋上谁就搬到谁家；保底伤害漂移已修复）
+- Day 8：坏味道「数据泥团 + 基本类型偏执」（Data Clumps / Primitive Obsession）— 进行中（作业骨架 Homework/重构/Position.cs 已布置）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：回答 Day 7 苏格拉底问题（伤害计算摸谁的字段）→ 搬移函数 → 标准解 → Day 8 数据泥团/基本类型偏执
+**下一步**：回答 Day 8 苏格拉底问题（坐标三兄弟传几处）→ 引入参数对象 → 标准解 → Day 9 重复的 switch/循环
 
 **记录约定**（2026-08-03 用户确认）：每次问答产生的纠错/标准解/子问题同步写入对应 md 笔记；进度同步到 prompt「当前学习状态」与本文件；每次 git 提交后定期 `git push`（公司代理报错 → 方案 A 绕过代理直连；VPN 直连超时 → 本地 Clash 代理 7897，均不动任何配置）。
 

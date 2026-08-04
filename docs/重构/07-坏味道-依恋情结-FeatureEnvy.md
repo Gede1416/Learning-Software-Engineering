@@ -102,7 +102,7 @@ public class DamageSystem
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（第二轮通过 + 标准解）
-2. 搬移函数——**第一轮验收 ⚠️**：结构全对（GetAtk/GetDef/GetDmg 搬移 ✅、DamageSystem 删除 ✅）；**一处行为漂移**：`Math.Max(1, dmg)` → `Math.Max(dmg, 0)`——保底伤害 1 变 0（完全格挡时原版掉 1 滴、新版掉 0 滴），Day 3 `need` 坑重演（重构手痒）。改回后收官。
+2. 搬移函数——**第二轮验收 ✅（Day 7 收官，2026-08-03）**：第一轮漂移（`Math.Max(1, dmg)` → `Math.Max(dmg, 0)`，保底伤害 1→0）已改回 `Math.Max(dmg, 1)`（行为等价，可交换）；无用 using 已清；编译通过。教训：重构手痒 = 行为漂移（Day 3 `need` 坑重演一次后彻底记住）。
 3. 骨架：[Homework/重构/DamageSystem.cs](Homework/重构/DamageSystem.cs)
 
 ---

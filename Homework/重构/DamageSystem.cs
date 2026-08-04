@@ -1,5 +1,3 @@
-using System;
-
 namespace StudyNotes.Homework.Refactor.Damage
 {
     /// <summary>
@@ -22,29 +20,33 @@ namespace StudyNotes.Homework.Refactor.Damage
     {
         public int Atk;
         public int Level;
-        public Weapon Weapon;
+        public Weapon Weapon = new();
+
+        public int GetAtk()
+        {
+            return Atk + Weapon.Bonus;
+        }
     }
 
     public class Enemy
     {
         public int Def;
         public int Level;
-        public Armor Armor;
-    }
+        public Armor Armor = new();
 
-    // TODO: CalcPhysicalDamage 用的是谁的数据？这段逻辑更应该是谁的？
-    public class DamageSystem
-    {
-        public int CalcPhysicalDamage(Player player, Enemy enemy)
+        public int GetDef()
         {
-            int atk = player.Atk;
-            int weaponBonus = player.Weapon.Bonus;
-            int def = enemy.Def;
-            int armor = enemy.Armor.Reduction;
-            int dmg = atk + weaponBonus - def - armor;
-            if (player.Level > enemy.Level)
-                dmg += (player.Level - enemy.Level) * 2;
-            return Math.Max(1, dmg);
+            return Def + Armor.Reduction;
+        }
+
+        public int GetDmg(Player player)
+        {
+            var atk = player.GetAtk();
+            var def = GetDef();
+            var dmg = atk - def;
+            if (player.Level > Level)
+                dmg += (player.Level - Level) * 2;
+            return Math.Max(dmg, 1);
         }
     }
 }
