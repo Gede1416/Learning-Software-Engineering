@@ -40,7 +40,7 @@ metadata:
 - Day 3：坏味道「过长函数」（Long Function）✅ — 两轮验收收官（need 捕获时机行为漂移 → 修复）
 - Day 4：坏味道「过长参数列表」（Long Parameter List）✅ — 2026-08-03 收官（引入参数对象：编译期拦截 + 属性名代替参数顺序）
 - Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）✅ — 2026-08-03 三轮验收收官（private 唯一闸口 + 行为零变化）
-- Day 6：坏味道「发散式变化 + 霰弹式修改」（Divergent Change / Shotgun Surgery）— 进行中（作业骨架 Homework/重构/HeroSystem.cs 已布置）
+- Day 6：坏味道「发散式变化 + 霰弹式修改」（Divergent Change / Shotgun Surgery）— 概念题已答（霰弹 ✅ 发散 ❌，**子问题待答**），动手题未做
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
