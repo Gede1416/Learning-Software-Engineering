@@ -13,13 +13,13 @@ namespace StudyNotes.Homework.Refactor.Hero
     
     public interface IHeroAI
     {
-        void HeroAI();
+        void HeroAIAction();
     }
 
     //战士
     public class WarriorAI : IHeroAI
     {
-        public void HeroAI()
+        public void HeroAIAction()
         {
             Console.WriteLine("战士AI");
         }
@@ -28,18 +28,42 @@ namespace StudyNotes.Homework.Refactor.Hero
     //法师
     public class MageAI : IHeroAI
     {
-        public void HeroAI()
+        public void HeroAIAction()
         {
             Console.WriteLine("法师AI");
         }
     }
 
-    public class Hero
+    public abstract class Hero
     {
         public string Name;
         public string icon;
         public int Hp;
-        public IHeroAI AI;
+        public virtual void AIAction(){
+            Console.WriteLine("英雄AI");
+        }
+    }
+
+    //战士
+    public class Warrior : Hero
+    {
+        public Warrior()
+        {
+            Name = "战士";
+            icon = "战士";
+            Hp = 100;
+        }
+    }
+
+    //法师
+    public class Mage : Hero
+    {
+        public Mage()
+        {
+            Name = "法师";
+            icon = "法师";
+            Hp = 60;
+        }
     }
 
     // TODO: 加一个英雄要改 3 个文件（Factory / AI / Icon）。
@@ -50,9 +74,9 @@ namespace StudyNotes.Homework.Refactor.Hero
         {
             switch (type)
             {
-                case "战士": return new Hero { Name = "战士", icon = "sword.png", Hp = 100, AI = new WarriorAI() };
-                case "法师": return new Hero { Name = "法师", icon = "staff.png", Hp = 60, AI = new MageAI() };
-                default:     return new Hero { Name = "路人", icon = "default.png", Hp = 40, AI = new WarriorAI() };
+                case "战士": return new Warrior();
+                case "法师": return new Mage();
+                default:     return new Warrior();
             }
         }
     }
@@ -61,7 +85,7 @@ namespace StudyNotes.Homework.Refactor.Hero
     {
         public void Update(Hero hero)
         {
-            hero.AI.HeroAI();
+            hero.AIAction();
         }
     }
 
