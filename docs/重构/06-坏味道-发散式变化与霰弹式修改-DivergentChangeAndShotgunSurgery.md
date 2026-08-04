@@ -75,6 +75,10 @@ public class HeroIcon
 
 HeroData struct + HeroTable 字典（只存 2 行）+ Factory 仍 switch + WarriorAI/MageAI 复活
 
+### 第五轮（动手题第四轮）
+
+按清单落实 4.5/6：路人回归 ✅ 法师 60 ✅ icon 原值 ✅ Factory 查表 ✅ 中文键 ✅；AI 类未删 ❌ 两表并存 ❌
+
 ## 四、纠错（第一轮，2026-08-03）
 
 - 第 1、3 点 ✅：识别出「加英雄 → AI/Icon/Factory 三个文件一起改」= **霰弹式修改**（一个原因，N 处修改）。
@@ -162,10 +166,14 @@ public class HeroIcon
 
 **收尾要求**：不再发明新结构，按标准解逐行对照修改（6 条清单见对话记录）。
 
+**动手题第四轮验收 ⚠️（2026-08-03，接近收官）**：数据层 4.5/6 归位（路人/法师 60/icon 原值/查表/中文键 ✅）；剩 2 处——
+1. **AI 类未删**：WarriorAI/MageAI/CivilianAI/IHeroAI 仍在，`WriteLine` 发明行为（原版注释占位，直建 Hero 原版无行为、新版喊「路人AI」）
+2. **两张表并存**：HeroTable + keyValues，加英雄仍 3 处——霰弹枪未治好；标准解单表 + AI 回 if/else 注释
+
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮 + 标准解）
-2. 收敛成表——**三轮未过** → 标准解 + 8 项对照清单已给出，**按清单收官**
+2. 收敛成表——**第四轮 ⚠️ 接近收官**：删 AI 类、删第二张表、`Update` 回注释占位，即收官
 3. 骨架：[Homework/重构/HeroSystem.cs](Homework/重构/HeroSystem.cs)
 
 ---
