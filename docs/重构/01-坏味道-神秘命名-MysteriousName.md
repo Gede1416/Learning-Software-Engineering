@@ -6,7 +6,7 @@
 
 ## 一、坏代码场景
 
-重构 Day 1 的场景来自**你自己上周的收官作业** [Homework/MvcDemo.cs:119-134](Homework/MvcDemo.cs#L119-L134)：
+重构 Day 1 的场景来自**你自己上周的收官作业** [Homework/设计模式/MvcDemo.cs:119-134](Homework/设计模式/MvcDemo.cs#L119-L134)：
 
 ```csharp
 public class AIPlayerMnager
@@ -84,8 +84,8 @@ public class AIPlayerManager
 ## 五、作业（预计 5-10 分钟）
 
 1. 回答上面的问题，写进 `00-我的回答.md`
-2. 动手修复 [Homework/MvcDemo.cs](Homework/MvcDemo.cs) 里的命名——**铁律：只改名字，不改任何行为**
-3. 完成骨架 [Homework/DailyRewardSystem.cs](Homework/DailyRewardSystem.cs) 里的 TODO
+2. 动手修复 [Homework/设计模式/MvcDemo.cs](Homework/设计模式/MvcDemo.cs) 里的命名——**铁律：只改名字，不改任何行为**
+3. 完成骨架 [Homework/重构/DailyRewardSystem.cs](Homework/重构/DailyRewardSystem.cs) 里的 TODO
 
 ## 六、作业验收（2026-08-03）
 

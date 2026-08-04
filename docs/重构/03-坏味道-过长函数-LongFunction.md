@@ -105,7 +105,7 @@ private void NotifyLevelUp(Player p) { /* UI+音频+成就+存档，顺序不动
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮纠错 + 标准解）
 2. 把 `LevelUp` 拆成多个小函数——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——✅ 两轮验收通过
-3. 骨架：[Homework/LevelUp.cs](Homework/LevelUp.cs)
+3. 骨架：[Homework/重构/LevelUp.cs](Homework/重构/LevelUp.cs)
 
 ## 七、验收（2026-08-03，Day 3 收官）
 

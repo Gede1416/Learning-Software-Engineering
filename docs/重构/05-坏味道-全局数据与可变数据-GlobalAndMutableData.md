@@ -68,7 +68,7 @@ public class Enemy
 
 1. ~~回答上面的问题~~ 概念题已答，待按子问题修正
 2. 用**封装变量（Encapsulate Variable）**把全局字段收进私有字段 + 属性/方法访问——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
-3. 骨架：[Homework/GlobalScore.cs](Homework/GlobalScore.cs)
+3. 骨架：[Homework/重构/GlobalScore.cs](Homework/重构/GlobalScore.cs)
 
 ---
 

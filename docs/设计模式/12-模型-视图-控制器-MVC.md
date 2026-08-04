@@ -157,7 +157,7 @@ UI 天天改、输入偶尔改、数据几乎不改——所以三个对象按�
 
 验证：模型攻击一次 → 两个视图都收到事件；换控制器 → 行为变、视图不动。
 
-框架文件：[Homework/MvcDemo.cs](Homework/MvcDemo.cs)
+框架文件：[Homework/设计模式/MvcDemo.cs](Homework/设计模式/MvcDemo.cs)
 
 ### 验收（2026-08-02）
 

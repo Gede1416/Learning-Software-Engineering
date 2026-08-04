@@ -32,7 +32,7 @@
     - 格式示例：`feat: 设计模式/策略模式 2026-07-22`
     - 大章节名称 = SOLID原则 / 设计模式 / 重构 / 代码整洁 等
 11. **作业文件**：每次布置作业后，在项目根目录对应的命名空间目录下创建 `.cs` 文件，包含作业框架代码（接口、TODO 标记、测试用例骨架），供我直接填写。
-    - 命名格式：`{命名空间}/{类名}.cs`（如 `Commands/MoveCommand.cs`、`Models/Character.cs`）
+    - 命名格式：`Homework/{章节}/{类名}.cs`（如 `Homework/重构/LevelUp.cs`、`Homework/设计模式/GameState.cs`），章节 = 大章节名称（设计模式 / 重构 / 代码整洁 等）
     - 该项目为 .NET 7 控制台项目，命名空间 `StudyNotes`，入口 `Program.cs`
 12. **教学内容同步（强制）**：每次苏格拉底问答、纠错、标准解、子问题等教学产生的内容，必须同步写入对应 md 笔记文件（如 `docs/重构/{编号}-坏味道-{中文}-{英文}.md` 的「你的回答 / 纠错 / 标准解」小节）；会话结束时把当前进度同步到 `软件工程导师-prompt.md` 的「当前学习状态」与 `memory/software-engineering-study.md`，并更新「正在教学」描述。
 13. **定期推送（强制）**：每次完成 git 提交（规则 10）后，同步执行 `git push` 推送远程。若因公司代理报错（`Could not resolve proxy: proxy.company.com`），按 `F:/Goethe/Study/git代理问题整理.md` 方案 A 执行 `git -c http.proxy= -c https.proxy= push`（VPN 已连接时直连可成功，不动任何配置）。

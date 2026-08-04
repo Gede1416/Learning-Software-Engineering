@@ -71,7 +71,7 @@ public class EliteEnemy  { public void OnDie(Player player) => RewardCalculator.
 
 1. 回答上面的问题，写进 `00-我的回答.md`
 2. 把重复的奖励公式抽到一处，让 `NormalEnemy` 和 `EliteEnemy` 共用——**铁律：只抽取代码，不改数值、不改行为**
-3. 骨架：[Homework/EnemyReward.cs](Homework/EnemyReward.cs)
+3. 骨架：[Homework/重构/EnemyReward.cs](Homework/重构/EnemyReward.cs)
 
 ## 六、作业验收（2026-08-03）
 
