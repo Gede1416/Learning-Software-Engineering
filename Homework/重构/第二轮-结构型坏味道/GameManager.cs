@@ -12,26 +12,43 @@ namespace StudyNotes.Homework.Refactor.Manager
     public class GameManager
     {
         // 什么都是它的：输入、音频、成就、存档……3000 行
-        public int Score;
-        private bool _paused;
+        private InputSystem _inputSystem = new();
+        private AudioSystem _audioSystem = new();
+        private AchievementSystem _achievementSystem = new();
+        private SaveSystem _saveSystem = new();
 
         public void Update()
         {
-            HandleInput();
-            UpdateAudio();
-            CheckAchievements();
-            SaveIfNeeded();
+            _inputSystem.HandleInput();
+            _audioSystem.UpdateAudio();
+            _achievementSystem.CheckAchievements();
+            _saveSystem.SaveIfNeeded();
         }
-
-        public void HandleInput() { /* 读手柄/键盘 */ }
-        public void UpdateAudio() { /* 音量、BGM 切换 */ }
-        public void CheckAchievements() { /* 分数成就 */ }
-        public void SaveIfNeeded() { /* 写档 */ }
     }
 
-    // TODO 2: 惰性元素——什么都不干。内联或删除。
-    public class ScoreDisplay
+    //输入系统
+    public class InputSystem
     {
-        public void Refresh() { }
+        public void HandleInput() { /* 读手柄/键盘 */ }
+    }
+
+    //音频系统
+    public class AudioSystem
+    {
+        private bool _paused;
+        public void UpdateAudio() { /* 音量、BGM 切换 */ }
+    }
+
+    //成就系统
+    public class AchievementSystem
+    {
+        public int Score;
+        public void CheckAchievements() { /* 分数成就 */ }
+    }
+
+    //存档系统
+    public class SaveSystem
+    {
+        public void SaveIfNeeded() { /* 写档 */ }
     }
 }
