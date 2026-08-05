@@ -10,6 +10,11 @@ namespace StudyNotes.Homework.Refactor.Position
     /// </summary>
     public class Player
     {
+       public Position position;
+    }
+
+    public class Position
+    {
         public int X;
         public int Y;
         public int Z;
@@ -19,25 +24,23 @@ namespace StudyNotes.Homework.Refactor.Position
     public class TeleportSystem
     {
         // 传送：坐标三兄弟到处飞
-        public void Teleport(Player player, int x, int y, int z)
+        public void Teleport(Player player, Position position)
         {
-            player.X = x;
-            player.Y = y;
-            player.Z = z;
-            if (IsSafe(x, y, z))
+            player.position = position;
+            if (IsSafe(position))
             {
-                PlayPortalEffect(x, y, z);
+                PlayPortalEffect(position);
             }
         }
 
-        public bool IsSafe(int x, int y, int z) { return true; /* 检查区域 */ }
+        public bool IsSafe(Position position) { return true; /* 检查区域 */ }
 
-        public void PlayPortalEffect(int x, int y, int z) { /* 传送特效 */ }
+        public void PlayPortalEffect(Position position) { /* 传送特效 */ }
     }
 
     public class SpawnSystem
     {
-        public void SpawnEnemy(int x, int y, int z)
+        public void SpawnEnemy(Position position)
         {
             // 又一组 x, y, z——和传送系统没有任何关系
         }

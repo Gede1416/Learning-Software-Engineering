@@ -94,7 +94,7 @@ public class SpawnSystem
 ## 五、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（第一轮通过 + 标准解）
-2. 用**引入参数对象（Introduce Parameter Object）**把 x/y/z 收进一个 `Position` 类——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
+2. 引入参数对象——**第一轮通过 ✅（Day 8 收官，2026-08-03）**：数值/分支/顺序零变化，四个签名统一收进 `Position`，无发明行为。Build 0 错误。
 3. 骨架：[Homework/重构/第一轮-最常踩的坏味道/Position.cs](Homework/重构/第一轮-最常踩的坏味道/Position.cs)
 
 ---
