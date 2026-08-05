@@ -137,7 +137,7 @@ public class DungeonNpc    { private IEnterable _e = new DungeonProxy(); public 
 1. 实现 `SkillProxy.Cast` 的 3 个 TODO（蓝量 < 15 拒绝 / 冷却 3 秒内拒绝 / 通过后扣蓝、记冷却、委托）
 2. 用验收测试骨架跑通 4 个场景（成功 → 冷却拒绝 ×2 → 蓝量不足拒绝）
 
-框架文件：[Homework/设计模式/SkillProxy.cs](Homework/设计模式/SkillProxy.cs)（接口、TODO、测试骨架已备好）
+框架文件：[Homework/设计模式/第三轮-收尾补全/SkillProxy.cs](Homework/设计模式/第三轮-收尾补全/SkillProxy.cs)（接口、TODO、测试骨架已备好）
 
 验收（2026-08-02）：成功 → 冷却拒绝 ×2 → 蓝量拒绝，四项全过。期间踩的边界坑：`_lastCastSecond` 初值 -99（很久前）与施放后 0（刚放过）必须区分——`< 3` 会把 -99 也当冷却，`> 0` 会把 0 排除，正解是 `>= 0`。
 

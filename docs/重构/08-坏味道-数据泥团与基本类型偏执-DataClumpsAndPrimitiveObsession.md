@@ -95,7 +95,7 @@ public class SpawnSystem
 
 1. ~~回答上面的问题~~ 概念题 ✅（第一轮通过 + 标准解）
 2. 用**引入参数对象（Introduce Parameter Object）**把 x/y/z 收进一个 `Position` 类——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
-3. 骨架：[Homework/重构/Position.cs](Homework/重构/Position.cs)
+3. 骨架：[Homework/重构/第一轮-最常踩的坏味道/Position.cs](Homework/重构/第一轮-最常踩的坏味道/Position.cs)
 
 ---
 

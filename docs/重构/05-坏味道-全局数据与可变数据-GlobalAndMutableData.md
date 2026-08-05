@@ -103,7 +103,7 @@ public static class GameState
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮 + 标准解）
 2. 封装变量 ✅——三轮验收通过（private = 唯一闸口；重构 = 行为零变化）
-3. 骨架：[Homework/重构/GlobalScore.cs](Homework/重构/GlobalScore.cs)
+3. 骨架：[Homework/重构/第一轮-最常踩的坏味道/GlobalScore.cs](Homework/重构/第一轮-最常踩的坏味道/GlobalScore.cs)
 
 ---
 

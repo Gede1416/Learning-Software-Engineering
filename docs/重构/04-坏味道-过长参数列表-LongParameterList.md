@@ -67,7 +67,7 @@ Fowler《重构》第 3 章「过长参数列表」：参数列表越长，调�
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮纠错 + 标准解）
 2. 把 `CastSkill` 的参数用**引入参数对象（Introduce Parameter Object）**收拢——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——✅ **验收通过**
-3. 骨架：[Homework/重构/CastSkill.cs](Homework/重构/CastSkill.cs)
+3. 骨架：[Homework/重构/第一轮-最常踩的坏味道/CastSkill.cs](Homework/重构/第一轮-最常踩的坏味道/CastSkill.cs)
 
 ## 七、验收记录（第一轮，2026-08-03）
 
