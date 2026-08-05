@@ -44,14 +44,15 @@ metadata:
 - Day 7：坏味道「依恋情结」（Feature Envy）✅ — 2026-08-03 收官（方法恋上谁就搬到谁家；保底伤害漂移已修复）
 - Day 8：坏味道「数据泥团 + 基本类型偏执」（Data Clumps / Primitive Obsession）✅ — 2026-08-03 收官（概念+动手均第一轮通过）
 - Day 9：坏味道「重复的 switch + 循环」（Repeated Switches / Loops）✅ — 2026-08-03 收官（概念第一轮即过；动手题部分完成——for→LINQ ✅ 含 `?? new Item()` 漂移，switch→多态未做，用户跳过留待回补）
-- Day 10：坏味道「消息链 + 中间人」（Message Chains / Middle Man）— 概念题 ✅（第二轮即过：隐藏委托），**动手题未做**
+- Day 10：坏味道「消息链 + 中间人」（Message Chains / Middle Man）✅ — 2026-08-03 收官（概念第二轮即过；动手题第一轮通过——隐藏委托 + 主动移除中间人）
+- Day 11：坏味道「大类 + 惰性元素」（Large Class / Lazy Element）— 进行中（作业骨架 Homework/重构/第二轮-结构型坏味道/GameManager.cs 已布置）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：回答 Day 10 苏格拉底问题（5 层链哪里会断）→ 隐藏委托/移除中间人 → 标准解 → Day 11 大类/惰性元素
+**下一步**：回答 Day 11 苏格拉底问题（上帝类怎么拆）→ 提炼类/内联 → 标准解 → Day 12 异曲同工的类/纯数据类/被拒绝的馈赠
 
 **记录约定**（2026-08-03 用户确认）：每次问答产生的纠错/标准解/子问题同步写入对应 md 笔记；进度同步到 prompt「当前学习状态」与本文件；每次 git 提交后定期 `git push`（公司代理报错 → 方案 A 绕过代理直连；VPN 直连超时 → 本地 Clash 代理 7897，均不动任何配置）。
 
