@@ -42,7 +42,7 @@ metadata:
 - Day 5：坏味道「全局数据/可变数据」（Global/Mutable Data）✅ — 2026-08-03 三轮验收收官（private 唯一闸口 + 行为零变化）
 - Day 6：坏味道「发散式变化 + 霰弹式修改」（Divergent Change / Shotgun Surgery）✅ — 2026-08-03 收官（概念 ✅；动手题用户选择跳过，终版存档于笔记，可回补）
 - Day 7：坏味道「依恋情结」（Feature Envy）✅ — 2026-08-03 收官（方法恋上谁就搬到谁家；保底伤害漂移已修复）
-- Day 8：坏味道「数据泥团 + 基本类型偏执」（Data Clumps / Primitive Obsession）— 进行中（作业骨架 Homework/重构/Position.cs 已布置）
+- Day 8：坏味道「数据泥团 + 基本类型偏执」（Data Clumps / Primitive Obsession）— 概念题 ✅（**第一轮即过**，标准解已给出），**动手题未做**
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
