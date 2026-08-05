@@ -142,8 +142,10 @@ public int TotalValue() => Items.Sum(i => i.Value);
 ## 五、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（第一轮通过 + 标准解）
-2. 任务 1：两个 switch → 多态；任务 2：两个手写 for → LINQ——**铁律：只拆不换**——**未做**
+2. 任务 1（switch→多态）**未做**；任务 2（for→LINQ）**完成 ⚠️ 一处漂移**：`Find` 原版未找到返回 `null`，新版 `?? new Item()` 返回空道具——行为变化；另有未使用的 `using Microsoft.VisualBasic;`。**用户选择跳过（元指令），留待回补。**
 3. 骨架：[Homework/重构/第二轮-结构型坏味道/MonsterSystem.cs](Homework/重构/第二轮-结构型坏味道/MonsterSystem.cs)
+
+**Day 9 收官 ✅（2026-08-03）**：概念题掌握（重复 switch → 多态；循环 → 管道；数据用表/逻辑用多态闭环）。
 
 ---
 

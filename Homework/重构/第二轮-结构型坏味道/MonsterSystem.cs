@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
 
 namespace StudyNotes.Homework.Refactor.Monster
 {
@@ -64,21 +65,13 @@ namespace StudyNotes.Homework.Refactor.Monster
         // TODO 2: 手写 for——用 LINQ 管道替换（返回结果不变）。
         public Item Find(string name)
         {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                if (Items[i].Name == name) return Items[i];
-            }
-            return null;
+            var item =  Items.FirstOrDefault(item => item.Name == name);
+            return item ?? new Item();
         }
 
         public int TotalValue()
         {
-            int sum = 0;
-            for (int i = 0; i < Items.Count; i++)
-            {
-                sum += Items[i].Value;
-            }
-            return sum;
+            return Items.Sum(item => item.Value);
         }
     }
 }
