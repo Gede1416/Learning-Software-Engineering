@@ -68,5 +68,6 @@
 - **下次起点**：阶段三 → 重构（Refactoring），教材：《重构：改善既有代码的设计》— Martin Fowler。
 - 已完成：重构 Day 1「神秘命名」✓ | Day 2「重复代码」✓ | Day 3「过长函数」✓ | Day 4「过长参数列表」✓ | Day 5「全局数据/可变数据」✓ | Day 6「发散式变化+霰弹式修改」✓ | Day 7「依恋情结」✓ | Day 8「数据泥团+基本类型偏执」✓（2026-08-03 收官：概念+动手均第一轮通过，值对象思维成型）。
 - 正在教学：重构 Day 9 → 坏味道「重复的 switch + 循环」（Repeated Switches / Loops）。
-  - 苏格拉底坏代码已给（怪物 switch ×2 + 背包手写 for），作业骨架 `Homework/重构/第二轮-结构型坏味道/MonsterSystem.cs`，**待回答**。
+  - 概念题 ✅（**第一轮即过**：重复 switch 诊断/多态/LINQ 高阶函数，标准解见笔记：数据用表逻辑用多态闭环）。
+  - 动手题（`Homework/重构/第二轮-结构型坏味道/MonsterSystem.cs`：switch→多态 + for→LINQ）**未做**。
 - 请继续教学。
