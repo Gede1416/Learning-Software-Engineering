@@ -68,5 +68,6 @@
 - **下次起点**：阶段三 → 重构（Refactoring），教材：《重构：改善既有代码的设计》— Martin Fowler。
 - 已完成：重构 Day 1-8 ✓ 全部收官 | Day 9「重复的switch+循环」✓（2026-08-03：概念第一轮即过；动手题部分完成——for→LINQ ✅ 但 `?? new Item()` 漂移、switch→多态未做，用户跳过留待回补）。
 - 正在教学：重构 Day 10 → 坏味道「消息链 + 中间人」（Message Chains / Middle Man）。
-  - 苏格拉底坏代码已给（player.GetParty().GetLeader()… 5 层链），作业骨架 `Homework/重构/第二轮-结构型坏味道/DungeonChain.cs`，**待回答**。
+  - 概念题 ✅（第二轮即过：`Player.GetLeaderWeaponName()` 隐藏委托；快捷键救不了结构变化；标准解见笔记）。
+  - 动手题（`Homework/重构/第二轮-结构型坏味道/DungeonChain.cs` 隐藏委托压扁链）**未做**。
 - 请继续教学。
