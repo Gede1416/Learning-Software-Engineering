@@ -16,38 +16,32 @@ namespace StudyNotes.Homework.Refactor.Dungeon
     public class Equipment
     {
         private Weapon _weapon = new Weapon { Name = "铁剑" };
-        public Weapon GetWeapon() => _weapon;   // 中间人：只会转发
+        public string Name => _weapon.Name;
     }
 
     public class Leader
     {
         private Equipment _equipment = new Equipment();
-        public Equipment GetEquipment() => _equipment;   // 中间人
+        public string EquipmentName => _equipment.Name;
     }
 
     public class Party
     {
         private Leader _leader = new Leader();
-        public Leader GetLeader() => _leader;
+        public string LeaderEquipmentName => _leader.EquipmentName;
     }
 
     public class Player
     {
         private Party _party = new Party();
-        public Party GetParty() => _party;
+        public string PartyLeaderWeaponName=> _party.LeaderEquipmentName;
     }
 
-    // TODO: 一条链点到 5 层。把「找队长的武器名」压成一个委托：Player.GetLeaderWeaponName()
     public class DungeonSystem
     {
         public void OnEnterDungeon(Player player)
         {
-            string leaderWeapon = player
-                .GetParty()
-                .GetLeader()
-                .GetEquipment()
-                .GetWeapon()
-                .Name;
+            string leaderWeapon = player.PartyLeaderWeaponName;
 
             if (leaderWeapon == "圣剑")
             {

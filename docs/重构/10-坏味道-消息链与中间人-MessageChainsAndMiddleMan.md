@@ -115,7 +115,7 @@ public class DungeonSystem
 ## 六、作业（预计 5-10 分钟）
 
 1. ~~回答上面的问题~~ 概念题 ✅（两轮 + 标准解）
-2. 用**隐藏委托（Hide Delegate）**把 5 层链压成 `Player.GetLeaderWeaponName()`——**铁律：只拆不换**（数值、分支条件、调用顺序一律不动）——**未做**
+2. 隐藏委托——**第一轮通过 ✅（Day 10 收官，2026-08-03）**：链压成 4 层属性（`Equipment.Name` → `Leader.EquipmentName` → `Party.LeaderEquipmentName` → `Player.PartyLeaderWeaponName`），调用方 1 跳；**主动做了「移除中间人」**（砍掉 `GetWeapon()`/`GetEquipment()` 纯转发）；数值/分支/顺序零变化。小瑕疵：`PartyLeaderWeaponName` 命名绕、`=>` 前缺空格。
 3. 骨架：[Homework/重构/第二轮-结构型坏味道/DungeonChain.cs](Homework/重构/第二轮-结构型坏味道/DungeonChain.cs)
 
 ---
