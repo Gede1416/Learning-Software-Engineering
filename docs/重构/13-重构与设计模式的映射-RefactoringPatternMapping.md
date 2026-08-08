@@ -58,6 +58,15 @@ public int CalculateReward(Enemy enemy)
 
 ### 4. 验收：概念第一轮即过 ✅（填空正确；「不变化不改」命中核心判据；问题 3 映射准确）
 
+## 五、作业验收（2026-08-06）：LevelUp 行为契约
+
+纠错 2 轮：第 1 轮写成了坏味道回顾（内部实现史）；第 2 轮用上了「输入→输出」框架但粒度停在「条件→大致变化」，无具体数值 → 标准答案（4 条可断言契约，Day 14 测试靶子）：
+
+1. **主升级**：`Level=5, Exp=600`（needExp=550）→ `Level=6, Exp=50, MaxHp 120→140 且 Hp 回满, MaxMp+10 且 Mp 回满, Atk+5, Def+3`，触发 UI/音频/成就("level_6")/存档
+2. **十级倍奖励**：`Level=9, Exp=960` → `Level=10`，叠加 `SkillPoints+3, MaxHp+50, MaxMp+30, Atk+15, Def+8`
+3. **满级神模式**：`Level=99, Exp=9950` → `Level=100, HasGodMode=true, SkillPoints+100`（100 也满足第 2 条，三套全触发）
+4. **不满足**：`Level=5, Exp=100` → 任何数值不变、不触发事件
+
 ---
 
 `[进度：阶段三-重构 → Day 13「重构与设计模式的映射」苏格拉底问答中]`
