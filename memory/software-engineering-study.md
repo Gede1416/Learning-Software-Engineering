@@ -48,13 +48,14 @@ metadata:
 - Day 11：坏味道「大类 + 惰性元素」（Large Class / Lazy Element）✅ — 2026-08-06 收官（概念纠错 2 轮通过：补答命中「发散式变化极限 + 版本冲突」；代码作业通过——提炼成 4 个系统类、`_paused`→AudioSystem / `Score`→AchievementSystem 归伙正确、Update 顺序未变、ScoreDisplay 已删）
 - Day 12：坏味道「异曲同工的类/纯数据类/被拒绝的馈赠」（Alternative Classes / Data Class / Refused Bequest）✅ — 2026-08-06 收官（任务 1 纠错 2 轮：策略模式滥用——IAddGold+NormalAddGold+双转调（钱无主+接口没统一+中间人复发）→ 标准解函数改名 → 重写 Player 私有 _gold + AddGold ✅、残留 Wallet 中间人已删；任务 2 行为搬进类 ✅；任务 3 继承改组合 ✅；GetDamage 命名瑕疵联动 Day 1）
 - Day 13：重构与设计模式的映射 ✅ — 2026-08-06 收官（概念第一轮即过：Replace Conditional with Polymorphism 填空正确；判据「不变化不改」命中核心；映射表全对；「工厂顶层决策」观点已校正——判据看分支是否扩散不看位置；作业「LevelUp 行为契约」纠错 2 轮——坏味道回顾→抽象层→标准答案 4 条可断言契约，是 Day 14 测试靶子）
+- Day 14：测试保护下的重构工作流 ✅ — 2026-08-09 收官（概念：问题 1「测试」第一轮即过；问题 2 Fowler 节奏 测试→重构→测试；问题 3 接缝/操作点/特征测试——用户请求讲解；作业：LevelUpTests 4/4 PASS 含契约 3 陷阱 SkillPoints=103；契约 4 只断 Level 未断其余数值的小瑕疵已指出）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：Day 14「测试保护下的重构工作流」（Fowler 重构节奏：测试→小步→测试；给 Day 1-12 作业补测试；联动《修改代码的艺术》接缝）——苏格拉底场景已布置待回答
+**下一步**：Day 15「综合实战（阶段考）」——~100 行遗留存档/背包系统毕业考（找坏味道→特征测试→小步重构），待布置
 
 **记录约定**（2026-08-03 用户确认）：每次问答产生的纠错/标准解/子问题同步写入对应 md 笔记；进度同步到 prompt「当前学习状态」与本文件；每次 git 提交后定期 `git push`（公司代理报错 → 方案 A 绕过代理直连；VPN 直连超时 → 本地 Clash 代理 7897，均不动任何配置）。
 

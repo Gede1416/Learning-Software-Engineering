@@ -55,6 +55,15 @@ public class DamageSystem
 
 ### 4. 验收：问题 1 第一轮即过 ✅；问题 2、3 概念讲解后进入作业
 
+## 五、作业验收（2026-08-09）：LevelUpTests 4/4 PASS ✅
+
+- 契约 1 主升级：Level/Exp/MaxHp/Hp 回满/MaxMp/Mp 回满/Atk/Def 全断言 ✅
+- 契约 2 十级倍奖励：SkillPoints=3、MaxHp=170 叠加验证 ✅
+- 契约 3 满级神模式：**陷阱题通过**——SkillPoints=103（十倍 3 + 神模式 100 同时触发）✅
+- 契约 4 经验不足：⚠️ 小瑕疵——只断言了 `Level == 5`，未验证 Exp/MaxHp 等其余数值"不变"（建议补 `Exp == 100 && MaxHp == 100` 等）；方向正确，不阻塞验收
+- 运行：Program.cs 已接入 `LevelUpTests.Run()`，`dotnet run` 输出「通过 4 / 失败 0」
+- 命名空间小改动：Tests → Level（免 using），可接受
+
 ---
 
 `[进度：阶段三-重构 → Day 14「测试保护下的重构工作流」苏格拉底问答中]`

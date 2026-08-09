@@ -1,5 +1,6 @@
 using StudyNotes.Models;
 using StudyNotes.Commands;
+using StudyNotes.Homework.Refactor.Level;
 
 // ====== 命令模式：移动命令系统（撤销 + 重放）======
 // 来源：设计模式/06-命令模式-Command.md 作业
@@ -34,3 +35,6 @@ Console.WriteLine($"撤销后位置: {player.Position}");  // 预期: (1, 0)
 //
 // 答案（写你的）：
 // _____________________________________________________________
+
+// ====== 重构 Day 14：LevelUpSystem 行为契约测试 ======
+LevelUpTests.Run();

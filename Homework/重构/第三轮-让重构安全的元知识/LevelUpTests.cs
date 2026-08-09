@@ -1,7 +1,7 @@
 using System;
 using StudyNotes.Homework.Refactor.Level;
 
-namespace StudyNotes.Homework.Refactor.Tests
+namespace StudyNotes.Homework.Refactor.Level
 {
     /// <summary>
     /// 重构 Day 14 作业：测试保护下的重构工作流
@@ -23,9 +23,15 @@ namespace StudyNotes.Homework.Refactor.Tests
         {
             return new Player
             {
-                Level = level, Exp = exp,
-                MaxHp = 100, Hp = 60, MaxMp = 50, Mp = 20,
-                Atk = 10, Def = 5, SkillPoints = 0
+                Level = level,
+                Exp = exp,
+                MaxHp = 100,
+                Hp = 60,
+                MaxMp = 50,
+                Mp = 20,
+                Atk = 10,
+                Def = 5,
+                SkillPoints = 0
             };
         }
 
@@ -46,24 +52,51 @@ namespace StudyNotes.Homework.Refactor.Tests
             // 提示：var p = CreatePlayer(5, 600); new LevelUpSystem().LevelUp(p);
             // Assert(p.Level == 6, "等级 +1");
             // ...
+
+            var p = CreatePlayer(5, 600);
+            var levelUpSystem = new LevelUpSystem();
+            levelUpSystem.LevelUp(p);
+            bool isPast =
+                p.Level == 6 && p.Exp == 50 && p.MaxHp == 120 && p.Hp == 120
+                && p.MaxMp == 60 && p.Mp == 60 && p.Atk == 15 && p.Def == 8;
+            Assert(isPast, "主升级");
         }
 
         // TODO 契约 2：Level=9, Exp=960 → Level=10, 且叠加 SkillPoints=3, MaxHp=170(100+20+50), MaxMp=90, Atk=30, Def=16
         private static void TestTenthLevel()
         {
             Console.WriteLine("[契约 2] 十级倍奖励");
+            var p = CreatePlayer(9, 960);
+            var levelUpSystem = new LevelUpSystem();
+            levelUpSystem.LevelUp(p);
+            bool isPast =
+                p.Level == 10 && p.SkillPoints == 3 && p.MaxHp == 170
+                && p.MaxMp == 90 && p.Atk == 30 && p.Def == 16;
+            Assert(isPast, "十级倍奖励");
         }
 
         // TODO 契约 3：Level=99, Exp=9950 → Level=100, HasGodMode=true, SkillPoints=103（十倍 3 + 神模式 100）
         private static void TestGodMode()
         {
             Console.WriteLine("[契约 3] 满级神模式");
+            var p = CreatePlayer(99, 9950);
+            var levelUpSystem = new LevelUpSystem();
+            levelUpSystem.LevelUp(p);
+            bool isPast =
+                p.Level == 100 && p.HasGodMode && p.SkillPoints == 103;
+            Assert(isPast, "满级神模式");
         }
 
         // TODO 契约 4：Level=5, Exp=100（<550）→ 任何数值不变、无事件
         private static void TestNotEnoughExp()
         {
             Console.WriteLine("[契约 4] 经验不足");
+            var p = CreatePlayer(5, 100);
+            var levelUpSystem = new LevelUpSystem();
+            levelUpSystem.LevelUp(p);
+            bool isPast =
+                p.Level == 5;
+            Assert(isPast, "经验不足");
         }
     }
 }
