@@ -85,13 +85,39 @@ public class LegacySaveSystem
 
 铁律：行为、顺序、数值一律不变；**序列化格式字符串（`|atk:`、`Substring(4)`）是隐藏契约**，必须被特征测试锁住。
 
-## 三、你的回答（待填写）
+## 三、你的回答（2026-08-09，同步自 00-我的回答.md「阶段考」）
 
-（等你交坏味道清单）
+坏味道清单：
+1. Inventory 只包含数据 没有与数据对应的操作方法（数据存储、总价值计算）
+2. Item 初始化操作 没有包装到类里面
+3. SaveData 的数据赋值（全局可变数据）
+4. Item 明显的多态实现替换逻辑分支
+5. Save Load 多种抽象方法耦合（基础数据读写 + item 数据读写）
 
-## 四、标准解/验收（待给出）
+### 验收（第 1 步 ✅ 通过 2026-08-09）
+5 个全中且方向正确（纯数据类+依恋情结 / 构造封装 / 全局数据 / 多态替换 / 过长函数职责耦合）。补充两个漏的方向（不阻塞）：
+- 神秘命名（Day 1）：`it`/`inv` 缩写、`SaveData` 全局类名不达意（存的不是"数据操作"）
+- 魔法数字（Day 8）：`type` 1/2/3、`Substring(4)`/`Substring(3)` 的偏移量
 
-（重构完成后给出）
+## 四、标准解/验收（2026-08-09，全部 PASS）
+
+### 第 2 步：特征测试（纠错 3 轮后全绿 ✅）
+- 修复清单：`Path.GetTempFileName()` 临时文件、删 `InitTest` throw、**破坏现场断言**（清零后断言恢复 10/11）、背包逐项断言
+- 暴露的遗留 bug：保存格式 `"coin:10"`（冒号）与加载匹配 `"coin"` 不一致 → Load 必崩（越界）
+- 用户修法：**改保存格式**（`"coin:"` → `"coin|"`）——教学点：真实遗留项目中**存档格式是线上兼容契约**，正确姿势是「改解析不改格式」（`StartsWith("coin:")` + `Substring(5)`）；练习语境无旧存档可接受，但原则必须记住
+
+### 第 3 步：小步重构（完成度高 ✅）
+- `SaveData.ToSaveData/ToLoadSaveData`：基础数据读写归位
+- `Item.ToSave/CreatByLoad/TotalValue/Equals`：物品序列化归位
+- `Inventory.TotalValue`（委托 `it.TotalValue()`）+ Equals 修复（`i>=0`、`!Equals`）
+- `LegacySaveSystem` 瘦身为编排器
+- 流程点评：理想节奏 = 修解析 bug → 测试绿 → 再重构；用户「改格式+重构」一步到位——结果全绿但流程不规范（无保护飞行，好在测试补上后验证了行为）
+
+### 剩余可选坏味道（未消，不阻塞收官）
+- 魔法数字：`type` 1/2/3、`Substring(4)`/`Substring(3)` 偏移
+- 全局数据：`SaveData` 仍 public static 裸字段
+- 重复分发：`Item.ToSave` 与 `CreatByLoad` 两处 `type==1/2/3` 分支（Day 9 重复 switch）
+- `SplitLine` 多余私有方法（惰性元素苗头）
 
 ---
 
