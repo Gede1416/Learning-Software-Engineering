@@ -1,3 +1,6 @@
+using System.Net.Http.Headers;
+using System.Text;
+
 namespace StudyNotes.Homework.Refactor.Legacy
 {
     /// <summary>
@@ -37,39 +40,79 @@ namespace StudyNotes.Homework.Refactor.Legacy
     #endregion
 
     #region 物品数据
+    public enum ItemTypeEnum
+    {
+        None = 0,
+        Weapon = 1,
+        Medicine = 2
+    }
+
+    public interface IItemAction
+    {
+        public string Save(Item item);
+        public int Load(string[] parts);
+    }
+
+    public class NoneItemAction : IItemAction
+    {
+        private string _preVal = "|mat:";
+        private int _preCount => _preVal.Count() - 1;
+        public int Load(string[] parts) => int.Parse(parts[3].Substring(_preCount));
+        public string Save(Item item) => _preVal + item.value;
+    }
+    public class MedicineItemAction : IItemAction
+    {
+        private string _preVal = "|hp:";
+        private int _preCount => _preVal.Count() - 1;
+        public int Load(string[] parts) => int.Parse(parts[3].Substring(_preCount));
+
+        public string Save(Item item) => _preVal + item.value;
+    }
+    public class WeaponItemAction : IItemAction
+    {
+        private string _preVal = "|atk:";
+        private int _preCount => _preVal.Count() - 1;
+        public int Load(string[] parts) => int.Parse(parts[3].Substring(_preCount));
+        public string Save(Item item) => _preVal + item.value;
+    }
+
     public class Item : IEquatable<Item>
     {
         public string name;
         public int type;     // 1=武器 2=药水 3=材料（魔法数字）
         public int amount;
         public int value;
-        //todo ToSave
+        private static Dictionary<ItemTypeEnum, IItemAction> actionMap =
+        new Dictionary<ItemTypeEnum, IItemAction>
+        {
+            {ItemTypeEnum.None, new NoneItemAction() },
+            {ItemTypeEnum.Weapon, new WeaponItemAction() },
+            {ItemTypeEnum.Medicine, new MedicineItemAction() },
+        };
 
+        //todo ToSave
         public string ToSave()
         {
             string line = this.name + "|" + this.type + "|" + this.amount;
-
-            if (this.type == 1) line += "|atk:" + this.value;
-            else if (this.type == 2) line += "|hp:" + this.value;
-            else line += "|mat:" + this.value;
-
+            if (actionMap.TryGetValue((ItemTypeEnum)type, out var itemAction))
+                line += itemAction.Save(this);
+            else
+                line += actionMap[ItemTypeEnum.None].Save(this);
             return line + "\n";
         }
 
         //todo ToLoad
-        public static Item CreatByLoad(string[] parts)
+        public void CreatByLoad(string[] parts)
         {
-            var item = new Item();
-            item.name = parts[0];
-            item.type = int.Parse(parts[1]);
-            item.amount = int.Parse(parts[2]);
-
-            if (item.type == 1) item.value = int.Parse(parts[3].Substring(4));
-            else if (item.type == 2) item.value = int.Parse(parts[3].Substring(3));
-            else item.value = int.Parse(parts[3].Substring(4));
-
-            return item;
+            name = parts[0];
+            type = int.Parse(parts[1]);
+            amount = int.Parse(parts[2]);
+            if (actionMap.TryGetValue((ItemTypeEnum)type, out var itemAction))
+                this.value = itemAction.Load(parts);
+            else
+                this.value = actionMap[ItemTypeEnum.None].Load(parts);
         }
+
         // todo TotalValue
         public int TotalValue()
         {
@@ -163,7 +206,8 @@ namespace StudyNotes.Homework.Refactor.Legacy
                 bool flowControl = SaveData.ToLoadSaveData(parts);
                 if (flowControl) continue;
 
-                Item item = Item.CreatByLoad(parts);
+                Item item = new Item();
+                item.CreatByLoad(parts);
                 inv.items.Add(item);
             }
         }

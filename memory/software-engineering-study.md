@@ -49,7 +49,7 @@ metadata:
 - Day 12：坏味道「异曲同工的类/纯数据类/被拒绝的馈赠」（Alternative Classes / Data Class / Refused Bequest）✅ — 2026-08-06 收官（任务 1 纠错 2 轮：策略模式滥用——IAddGold+NormalAddGold+双转调（钱无主+接口没统一+中间人复发）→ 标准解函数改名 → 重写 Player 私有 _gold + AddGold ✅、残留 Wallet 中间人已删；任务 2 行为搬进类 ✅；任务 3 继承改组合 ✅；GetDamage 命名瑕疵联动 Day 1）
 - Day 13：重构与设计模式的映射 ✅ — 2026-08-06 收官（概念第一轮即过：Replace Conditional with Polymorphism 填空正确；判据「不变化不改」命中核心；映射表全对；「工厂顶层决策」观点已校正——判据看分支是否扩散不看位置；作业「LevelUp 行为契约」纠错 2 轮——坏味道回顾→抽象层→标准答案 4 条可断言契约，是 Day 14 测试靶子）
 - Day 14：测试保护下的重构工作流 ✅ — 2026-08-09 收官（概念：问题 1「测试」第一轮即过；问题 2 Fowler 节奏 测试→重构→测试；问题 3 接缝/操作点/特征测试——用户请求讲解；作业：LevelUpTests 4/4 PASS 含契约 3 陷阱 SkillPoints=103；契约 4 只断 Level 未断其余数值的小瑕疵已指出）
-- Day 15：综合实战（阶段考）✅ — 2026-08-09 收官，阶段三重构全部完成（坏味道清单 5 个全中；特征测试纠错 3 轮——假测试/InitTest throw/临时路径/Equals 反逻辑 → 暴露遗留 bug（保存格式 coin: 与加载匹配 coin 不一致）→ 用户改格式修复（教学点：格式是线上契约，应改解析不改格式）；重构抽离完成——SaveData/Item/Inventory 序列化归位 + TotalValue 搬移 + Equals 修复，LevelUpTests 4/4 + 加载测试全绿；剩余可选：魔法数字/全局数据/重复 switch）
+- Day 15：综合实战（阶段考）✅ — 2026-08-09 收官，阶段三重构全部完成（坏味道清单 5 个全中；特征测试纠错 3 轮——假测试/InitTest throw/临时路径/Equals 反逻辑 → 暴露遗留 bug（保存格式 coin: 与加载匹配 coin 不一致）→ 用户改格式修复（教学点：格式是线上契约，应改解析不改格式）；重构抽离完成——SaveData/Item/Inventory 序列化归位 + TotalValue 搬移 + Equals 修复，LevelUpTests 4/4 + 加载测试全绿；剩余坏味道补完（ItemTypeEnum 枚举 + IItemAction 策略化分发），保护网抓出 2 处漂移（ToSave 的 "/n" 字面量、CreatByLoad 未接收 Load 返回值 value 恒 0）→ 修复全绿；毕业考彻底收官）
 
 笔记文件：
 - docs/重构/01-坏味道-神秘命名-MysteriousName.md

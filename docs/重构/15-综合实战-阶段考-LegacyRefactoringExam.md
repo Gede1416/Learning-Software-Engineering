@@ -113,11 +113,11 @@ public class LegacySaveSystem
 - `LegacySaveSystem` 瘦身为编排器
 - 流程点评：理想节奏 = 修解析 bug → 测试绿 → 再重构；用户「改格式+重构」一步到位——结果全绿但流程不规范（无保护飞行，好在测试补上后验证了行为）
 
-### 剩余可选坏味道（未消，不阻塞收官）
-- 魔法数字：`type` 1/2/3、`Substring(4)`/`Substring(3)` 偏移
-- 全局数据：`SaveData` 仍 public static 裸字段
-- 重复分发：`Item.ToSave` 与 `CreatByLoad` 两处 `type==1/2/3` 分支（Day 9 重复 switch）
-- `SplitLine` 多余私有方法（惰性元素苗头）
+### 剩余可选坏味道（2026-08-09 全部完成 ✅）
+- 魔法数字 → `ItemTypeEnum` 枚举（None/Weapon/Medicine）✅
+- 重复分发 → `IItemAction` 策略 + `actionMap` 字典（Replace Conditional with Polymorphism 落地）✅
+- 重构过程被保护网抓出 2 处漂移：`ToSave` 换行符写成字面 `"/n"`（崩）+ `CreatByLoad` 未接收 `Load()` 返回值（value 恒 0）——两次尝试后标准答案修复，测试全绿 ✅
+- 教学意义：这次「保护网抓漂移」的完整过程就是毕业考最好的结尾——没有特征测试，这两处漂移永远不会被发现
 
 ---
 
