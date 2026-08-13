@@ -67,6 +67,7 @@ public class SkillSystem
 ### 验收
 - Q2（治疗加减歧义）、Q3（搜索噪音）第一轮即过 ✅
 - Q1 纠错 1 轮后补全：`cd` 双义 / `GetD` 词不达意 / `Kill` 副作用 / `r` 双义 全命中 ✅
+- 作业（RenameSkill.cs）：主体命名全对（damage/range/canHitFriend/baseCoolDown/skillId/player/enemy/HpToZeroDropLootGetExp）；纠错 2 轮指出 `d`→`damge` 拼写错误（搜索 damage 找不到 damge）、残留 TODO 注释、`sk`/`p` 参数未改——**用户跳过最终修正，留待回补**（2026-08-14）
 
 ---
 

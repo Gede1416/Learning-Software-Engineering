@@ -8,28 +8,28 @@ namespace StudyNotes.Homework.CleanCode.Renaming
     /// </summary>
     public class SkillData
     {
-        public int dmg;        // TODO 改：伤害量还是治疗量？
-        public float r;        // TODO 改：爆炸半径还是射程？（按你场景的语义定）
-        public bool f;         // TODO 改：友伤开关？（布尔用 is- 前缀）
-        public int cd;         // TODO 改：基础冷却（静态配置）还是剩余冷却（动态状态）？
+        public int damage;       
+        public float range;       
+        public bool canHitFriend;       
+        public int baseCoolDown;        
     }
 
     public class SkillSystem
     {
-        public void Use(int sk, Player p, Enemy e)     // TODO 改：sk → skillId
+        public void Use(int skillId, Player player, Enemy enemy)     // TODO 改：sk → skillId
         {
-            var d = GetD(sk, p);                        // TODO 改：CalcDamage(caster, skillId)
-            e.HP -= d;
-            if (e.HP <= 0) Kill(e, p);                  // TODO 改：副作用要暴露在名字里
+            var damge = GetSkillDamage(skillId, player);                        // TODO 改：CalcDamage(caster, skillId)
+            enemy.HP -= damge;
+            if (enemy.HP <= 0) HpToZeroDropLootGetExp(enemy, player);                  // TODO 改：副作用要暴露在名字里
         }
 
-        private int GetD(int sk, Player p)
+        private int GetSkillDamage(int sk, Player p)
         {
             // 技能伤害计算（不改内容）
             return p.Atk * 2 + sk;
         }
 
-        private void Kill(Enemy e, Player p)
+        private void HpToZeroDropLootGetExp(Enemy e, Player p)
         {
             // 实际做了三件事：扣血结算、掉落、经验（名字必须反映这些）
             e.HP = 0;
