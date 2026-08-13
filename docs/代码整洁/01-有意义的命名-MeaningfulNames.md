@@ -35,13 +35,38 @@ public class SkillSystem
 2. 当需求变化时（比如新技能"圣光治疗队友"），这些名字具体在哪一步**误导你改错**？
 3. 一个变量叫 `d`，全文件搜索 `d` 会搜出什么？（搜索友好性）
 
-## 三、你的回答（待填写）
+## 三、你的回答（2026-08-14，同步自 00-我的回答.md）
 
-（等你回答）
+1. 我的第一印象：dmg 伤害、r 半径、f 无法判断、sk 可能是技能id、d 计算后的伤害、p 玩家、e 敌人
+2. 计算技能效果时我是该加等于还是 减等于 dmg；f 会不会影响我的技能效果
+3. 所有包含 d 的单词
 
-## 四、标准解（待给出）
+## 四、标准解（2026-08-14）
 
-（回答后给出）
+### Uncle Bob 命名五原则（《代码整洁之道》第 2 章）
+
+1. **名副其实（Intention-Revealing）**：名字揭示意图——`d` 不揭示，`damageDealt` 揭示
+2. **避免误导（Avoid Disinformation）**：`r` 半径/射程歧义；名字不能让人猜错
+3. **做有意义的区分（Meaningful Distinctions）**：静态定义 vs 动态状态要分开——`baseCooldown` / `remainingCooldown`，不能都叫 `cd`
+4. **读得出（Pronounceable）**：`sk` 怎么读？`skillId` 能
+5. **可搜索（Searchable）**：单字母 `d` 全局搜索 = 所有含 d 的单词；`MAX_ITEMS` 好搜
+
+### 场景改名单（用户第 2 轮补答通过）
+
+| 坏名 | 好名 | 原则 |
+|------|------|------|
+| `dmg` | `damage`（治疗技能用 `healAmount` 更明确） | 名副其实 |
+| `r` | `blastRadius` / `range`（按语义定） | 避免误导 |
+| `f` | `isFriendlyFire`（布尔用 is- 前缀） | 避免误导 |
+| `cd` | `baseCooldown`（配置）/ `remainingCooldown`（状态） | 有意义的区分 |
+| `sk` | `skillId` | 读得出 |
+| `d` | `damage` | 可搜索 |
+| `GetD` | `CalcDamage(Player caster, int skillId)` | 动作+对象 |
+| `Kill` | `KillAndSettle` 或拆出结算函数 | 名实相符——副作用必须暴露在名字里（Uncle Bob：函数要么做事要么回答问题，不能又做事又回答） |
+
+### 验收
+- Q2（治疗加减歧义）、Q3（搜索噪音）第一轮即过 ✅
+- Q1 纠错 1 轮后补全：`cd` 双义 / `GetD` 词不达意 / `Kill` 副作用 / `r` 双义 全命中 ✅
 
 ---
 
