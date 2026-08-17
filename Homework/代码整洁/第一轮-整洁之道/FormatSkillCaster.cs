@@ -15,17 +15,37 @@ namespace StudyNotes.Homework.CleanCode.Formatting
     {
         private int mana;
         private int cooldownRemain;
-        public void CastSkill(int skillId, Player target) {
-            if (cooldownRemain > 0) return; var skill = GetSkill(skillId);
-            if (mana < skill.Cost) return; mana -= skill.Cost; cooldownRemain = skill.Cooldown; skill.Apply(target);
+        public void CastSkill(int skillId, Player target)
+        {
+            if (cooldownRemain > 0)
+                return;
+            var skill = GetSkill(skillId);
+            if (mana < skill.Cost)
+                return;
+
+            mana -= skill.Cost;
+            cooldownRemain = skill.Cooldown;
+            skill.Apply(target);
         }
-        private Skill GetSkill(int id) { return SkillTable.Get(id); }
-        public void Tick() { if (cooldownRemain > 0) cooldownRemain--; }
+        public void Tick()
+        {
+            if (cooldownRemain > 0)
+                cooldownRemain--;
+        }
         public int Mana { get { return mana; } }
         public int CooldownRemain { get { return cooldownRemain; } }
+        private Skill GetSkill(int id) { return SkillTable.Get(id); }
     }
 
-    public class Skill { public int Cost; public int Cooldown; public void Apply(Player target) { } }
+    public class Skill
+    {
+        public int Cost;
+        public int Cooldown;
+        public void Apply(Player target) { }
+    }
     public class Player { }
-    public static class SkillTable { public static Skill Get(int id) => new Skill(); }
+    public static class SkillTable
+    {
+        public static Skill Get(int id) => new Skill();
+    }
 }

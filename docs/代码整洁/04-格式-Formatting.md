@@ -89,6 +89,7 @@ public class SaveManager
 - Q2 头条 = 公开入口（SaveGame/LoadGame），非变量
 - Q3 `raw` = LoadGame 读盘所得 → ValidateData 属加载族，挨着 LoadGame
 - 作业（2026-08-14 ✅）：FormatSaveManager.cs 重排完全符合五规则——字段顶部/公开入口在上/细节沉底/同族紧挨且保持调用链顺序
+- 附加作业（2026-08-14 ✅）：FormatSkillCaster.cs——CastSkill 四逻辑块拆行顺序未动、字段顶部、空行分组；纠错 1 轮（GetSkill 未沉底）后移入细节位，最终结构：字段→公开入口→属性→细节
 
 ## 四、标准解（待给出）
 
