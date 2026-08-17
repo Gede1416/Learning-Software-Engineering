@@ -14,15 +14,82 @@ namespace StudyNotes.Homework.CleanCode.Encapsulation
     /// </summary>
     public class PlayerData
     {
-        public int Hp;
-        public int MaxHp;
-        public int Mana;
-        public int MaxMana;
+        private int _hp;
+        private int _maxHp;
+        private int _mana;
+        private int _maxMana;
 
-        public int GetHp() { return Hp; }
-        public void SetHp(int value) { Hp = value; }
+        public void TakeDamage(uint damage)
+        {
+            _hp -= (int)damage;
+            if (IsDead())
+            {
+                _hp = 0;
+                // 死亡消息
+            }
+        }
+
+        public void Heal(uint heal)
+        {
+            if (_hp == _maxHp)
+            {
+                Console.WriteLine("player hp is Max Cant beheal");
+                return;
+            }
+            if (IsDead())
+            {
+                Console.WriteLine("player is dead can`t heal");
+                return;
+            }
+            _hp += (int)heal;
+            if (_hp > _maxHp)
+            {
+                _hp = _maxHp;
+            }
+        }
+
+        public void UseMana(uint castMana)
+        {
+            if (_mana == 0)
+            {
+                Console.WriteLine("mana is empty can`t be use");
+                return;
+            }
+            bool flowControl = IsManaEnough(castMana);
+            if (!flowControl)
+            {
+                return;
+
+            }
+            _mana -= (int)castMana;
+        }
+
+        private bool IsManaEnough(uint castMana)
+        {
+            bool res = true;
+            if (_mana < castMana)
+            {
+                res = false;
+            }
+            return res;
+        }
+
+
+        private bool IsDead()
+        {
+            bool res = false;
+            if (_hp <= 0)
+            {
+                res = true;
+            }
+            return res;
+        }
+
+
+
         // ……无脑 getter/setter（待改造）
 
         // TODO: 私有化字段 + 行为接口 + 规则集中
+
     }
 }
