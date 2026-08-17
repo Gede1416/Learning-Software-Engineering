@@ -9,26 +9,25 @@ namespace StudyNotes.Homework.CleanCode.Formatting
     /// </summary>
     public class SaveManager
     {
-        private void SaveFile(string data) { /* 写盘 */ }
+
+        public int Version = 1;
+        public string SavePath;
 
         public void SaveGame()
         {
             var data = BuildData();
             SaveFile(data);
         }
-
-        public int Version = 1;
-        public string SavePath;
-
-        private void ValidateData(string raw) { /* 校验 */ }
-
         public void LoadGame()
         {
             var raw = ReadFile(SavePath);
             ValidateData(raw);
         }
 
-        private string ReadFile(string path) { return ""; }
         private string BuildData() { return "data"; }
+        private void SaveFile(string data) { /* 写盘 */ }
+        private string ReadFile(string path) { return ""; }
+        private void ValidateData(string raw) { /* 校验 */ }
+
     }
 }

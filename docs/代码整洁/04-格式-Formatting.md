@@ -88,6 +88,7 @@ public class SaveManager
 - Q1 基本过（字段位置/校验归族/调用拆行）；补漏：同族隔开、空行分组
 - Q2 头条 = 公开入口（SaveGame/LoadGame），非变量
 - Q3 `raw` = LoadGame 读盘所得 → ValidateData 属加载族，挨着 LoadGame
+- 作业（2026-08-14 ✅）：FormatSaveManager.cs 重排完全符合五规则——字段顶部/公开入口在上/细节沉底/同族紧挨且保持调用链顺序
 
 ## 四、标准解（待给出）
 
