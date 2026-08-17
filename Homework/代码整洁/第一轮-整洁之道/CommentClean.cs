@@ -13,16 +13,14 @@ namespace StudyNotes.Homework.CleanCode.Comments
         public int atk;  // 攻击
         public int MaxHp;
 
-        // 这个函数用来回血
         public void Heal(int amount)
         {
             // 保证血量不超过上限
             hp = Math.Min(hp + amount, MaxHp);
-            // 通知 UI 更新
             UiManager.Refresh(this);
         }
 
-        // TODO: 以后要加暴击
+        // TODO: Goethe 2026::08:17 以后要加暴击
         public int GetAttack() => atk;
     }
 
