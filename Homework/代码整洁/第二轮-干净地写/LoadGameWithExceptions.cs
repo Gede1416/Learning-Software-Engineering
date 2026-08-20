@@ -21,24 +21,47 @@ namespace StudyNotes.Homework.CleanCode.ErrorHandling
         }
     }
 
+    public class SaveLoadException : Exception
+    {
+        public SaveLoadException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+
     public class SaveSystem
     {
         // TODO 1: 改造 LoadGame —— 去掉返回码，用异常包装
-        public int LoadGame(string path, out GameData data)   // 旧签名，待改
+        public void LoadGame(string path, out GameData data)   // 旧签名，待改
         {
-            if (!System.IO.File.Exists(path)) return -1;
-            var lines = System.IO.File.ReadAllLines(path);
-            if (lines.Length == 0) return -2;
-            data = TryParse.Parse(string.Join("\n", lines));
-            return 0;
+            data = default;
+            try
+            {
+                var lines = System.IO.File.ReadAllLines(path);
+                data = TryParse.Parse(string.Join("\n", lines));
+            }
+            catch (IOException ex)
+            {
+                throw new SaveLoadException($"路径错误{path}", ex);
+            }
+            catch (FormatException ex)
+            {
+                throw new SaveLoadException($"空存档{path}", ex);
+            }
         }
 
         // TODO 2: 顶层调用处 —— try-catch 一次
         public void BootGame(string path)
         {
-            var code = LoadGame(path, out var data);
-            if (code == 0) { StartGame(data); }
-            else { ShowError("加载失败"); }
+            try
+            {
+                LoadGame(path, out var data);
+                StartGame(data);
+            }
+            catch (SaveLoadException ex)
+            {
+                ShowError(ex.Message);
+                ShowError(ex.ToString());
+            }
         }
 
         private void StartGame(GameData d) { }

@@ -98,10 +98,45 @@ catch (SaveLoadException ex)
 - **顶层一次 catch**：不在每层 try-catch 堆防御（否则又是噪音）
 - 联动：返回码还有个致命伤——**异常不可被忽略**（编译器强制），返回码可以被悄悄扔掉
 
-## 四、标准解（待给出）
+## 五、C# 异常语法补课（2026-08-20，作业前补）
 
-（回答后给出）
+> 前置：用户不熟悉 C# 异常语法，作业前补一课机制。全程绑定存档加载场景。
+
+### 五件套
+1. **throw**：抛出一个异常对象，当前函数立即停止，异常沿调用栈上飞——谁接住谁处理，没人接程序就崩（「错误不可能被静默丢弃」的机制来源）
+2. **try-catch**：按异常类型匹配，越具体越靠前（`FileNotFoundException` ⊂ `IOException` ⊂ `Exception`）；最底下 `catch (Exception)` 是兜底网 = 「顶层统一处理一次」
+3. **throw; vs throw ex;**：`throw;` 保留原始 StackTrace；`throw ex;` 把 StackTrace 重置成重抛行——「错误还是那个错误，案发现场的指纹被擦掉了」
+4. **自定义异常**：继承 `Exception`，把原始异常作为 inner 传给 `base(message, inner)` → InnerException 链
+5. **finally**：不管成败都执行（资源清理）
+
+### 自检题（2 轮纠错）`catch (FormatException ex) { throw ex; }` 丢了什么？
+- 第 1 答「丢掉了前面出栈的异常」→ 不精确：异常对象本身没丢，`throw ex` 抛的还是同一个对象
+- 第 2 答「InnerException 没办法找到」→ 偏：没包装就没有 InnerException，`throw ex` 根本不碰 InnerException
+- **标准解**：丢的是 **StackTrace**（原始炸点行号）——日志只剩重抛行，最初在哪炸的、谁调用的链路全没了
+
+## 六、作业验收记录（LoadGameWithExceptions.cs，2026-08-20）
+
+| 轮次 | 结果 | 问题 |
+|------|------|------|
+| 1 | 硬伤 2 + 概念 2 | ① `SaveLoadException` 未定义（编译不过）② `new SaveLoadException("文件不存在", path)` 第二参类型错（应传 Exception）③ **包装对象搞反**：`ReadAllLines`/`Parse` 裸奔，IOException/FormatException 逃逸不包装，inner 永远 null ④ 顶层 catch 后又 `throw;` 重抛 |
+| 2 | 修一半 | ①④ 修好；②③ 仍在——包装链始终没建 |
+| 3 | 功能通过 | 四场景全覆盖（`FileNotFoundException` 是 `IOException` 子类，一个 catch 接住文件不存在+磁盘坏）、包装链建立、顶层收尾一次；但新引入 `public string message;` 冗余字段遮蔽基类 `Message` 属性（CS0108） |
+| 4 ✅ | 通过 | `message` 字段删除，改用 `ex.Message` + 顶层补 `ex.ToString()` 留完整链，收官 |
+
+标准解关键段（第 3 轮给出）：catch 原始异常 → 包装带上下文：
+```csharp
+catch (IOException ex)     // FileNotFoundException 也是 IOException 子类，一次接住
+{
+    throw new SaveLoadException($"读取存档 {path} 失败", path, ex);
+}
+catch (FormatException ex)
+{
+    throw new SaveLoadException($"存档 {path} 格式损坏", path, ex);
+}
+```
+
+> 教学点：**技术债会累积**——Day 1 留待回补的 RenameSkill.cs `DropLoot` 编译错（`e.DropLoot(e)`）+ `damge` 拼写 + `sk`/`p` 参数 + TODO 残留，2026-08-20 构建时暴露，堵住了整个项目构建。
 
 ---
 
-`[进度：阶段四-代码整洁 → Day 6「错误处理」苏格拉底问答中]`
+`[进度：阶段四-代码整洁 → Day 6「错误处理」✅ 收官（2026-08-20）| Day 7「边界」作业布置中]`

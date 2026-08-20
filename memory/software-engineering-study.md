@@ -56,7 +56,12 @@ metadata:
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：阶段四 Day 6「错误处理」——标准解已给（异常包装：底层抛不吞→catch 包装重抛带上下文→顶层统一处理；InnerException 保留原始栈；用户可读+开发可查），作业 LoadGameWithExceptions.cs 待做。阶段四三轮 12 天：整洁之道（命名/函数/注释/格式/对象）→ 干净地写（错误/边界/测试整洁/类）→ 遗留代码（接缝/依赖破坏/阶段考）。Day 1 作业修正、Day 2 概念问答被用户跳过留待回补
+**下一步**：阶段四 Day 7「边界」——作业 AdSdkBoundary.cs 已布置（IRewardedAd 游戏契约 / RewardedAd 包装 SDK / AdManager 不碰 SDK），待做。待还旧债：Day 1 RenameSkill.cs 回补清单（`DropLoot` 编译错 `e.DropLoot(e)` + `damge` 拼写 + `sk`/`p` 参数 + TODO 残留，2026-08-20 构建暴露堵住全项目）+ Day 2 概念问答跳过。阶段四三轮 12 天：整洁之道（命名/函数/注释/格式/对象）→ 干净地写（错误/边界/测试整洁/类）→ 遗留代码（接缝/依赖破坏/阶段考）
+
+### Day 6：错误处理 ✅（2026-08-20 收官）
+- 概念：Q1 基本过（信息少/静默）、Q2 纠 1 轮（调用栈=定位利器）、Q3 异常包装标准解已给
+- 补课：C# 异常语法五件套（throw/try-catch/类型匹配/throw vs throw ex/自定义异常+InnerException/finally）；自检 2 轮纠错——「丢栈」不精确 →「InnerException」偏 → 标准解：丢 StackTrace 不是 InnerException
+- 作业：LoadGameWithExceptions.cs 四轮验收——R1（SaveLoadException 未定义 + 第二参类型错 + 包装对象搞反 + 顶层重抛）、R2（只修一半）、R3（功能通过但 message 冗余字段遮蔽基类 Message）、R4 ✅ 通过收官
 
 **记录约定**（2026-08-03 用户确认）：每次问答产生的纠错/标准解/子问题同步写入对应 md 笔记；进度同步到 prompt「当前学习状态」与本文件；每次 git 提交后定期 `git push`（公司代理报错 → 方案 A 绕过代理直连；VPN 直连超时 → 本地 Clash 代理 7897，均不动任何配置）。
 
