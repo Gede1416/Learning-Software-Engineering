@@ -42,7 +42,44 @@ public class AdManager
 
 ## 四、纠错记录（待补）
 
-## 五、标准解（待两轮答错后给出）
+## 五、标准解（2026-08-20，用户跳过苏格拉底问答直接给出）
+
+### 诊断：边界泄漏（Boundary Leakage）
+- 「就绪」「奖励」是**游戏方的概念**，现在由供应商的 int 魔法数字定义（`Get_State()==2`、回调 `1/2`）——SDK 怪癖泄漏进业务代码
+- 崩盘点：① 换供应商/升级 SDK → 所有摸 SDK 的地方全改（霰弹式修改）② 魔法数字 2 无人懂 ③ 业务代码无法测试（SDK 不可 mock）
+
+### 标准解：适配器（阶段二设计模式）+ 学习测试
+```csharp
+public interface IRewardedAd          // 游戏方契约——只关心游戏的事
+{
+    bool IsReady { get; }
+    void Show();
+    event Action OnReward;
+    event Action OnFail;
+}
+
+public class RewardedAd : IRewardedAd // 包装器——翻译 SDK 怪癖
+{
+    private readonly RewardedAdSdk _sdk = new();
+    public RewardedAd() { _sdk.SDK_Init("app_123"); }
+    public bool IsReady => _sdk.Get_State() == 2;
+    public void Show() => _sdk.SDK_Show();
+    // Set_Listener 的 int 回调 → 翻译成 OnReward/OnFail 事件
+}
+
+public class AdManager                  // 使用方——不碰 SDK
+{
+    private readonly IRewardedAd _ad;
+    public void PlayerClickedWatchAd()
+    {
+        if (_ad.IsReady) _ad.Show();    // 魔法数字消失了
+    }
+}
+```
+- 学习测试（Learning Tests）：先写测试验证你对 SDK 的假设（`Get_State()` 到底什么返回值），而不是猜
+- 作业 AdSdkBoundary.cs（TODO 1-3）——用户跳过，留待回补
+
+## 六·五、验收：用户跳过概念问答与作业（2026-08-20），标准解存档
 
 ## 六、作业布置（2026-08-20）
 
