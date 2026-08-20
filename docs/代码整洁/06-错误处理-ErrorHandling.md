@@ -98,6 +98,22 @@ catch (SaveLoadException ex)
 - **顶层一次 catch**：不在每层 try-catch 堆防御（否则又是噪音）
 - 联动：返回码还有个致命伤——**异常不可被忽略**（编译器强制），返回码可以被悄悄扔掉
 
+### 补充：异常类型选型（2026-08-18 用户提问「throw 都有哪些类型怎么用」）
+
+**内建异常（够用 80%）**：`ArgumentNullException`（参数 null）/ `ArgumentOutOfRangeException`（超范围）/ `InvalidOperationException`（状态不合法）/ `FormatException`（解析失败）/ `IOException` 家族（磁盘）/ `FileNotFoundException`
+
+**自定义异常**（领域层核心武器）：`SaveLoadException : Exception`，构造函数带 message + inner
+
+**绝不抛**：`NullReferenceException` / `IndexOutOfRangeException`——bug 症状，不是错误处理
+
+**决策线**：
+- 正常业务分支（蓝不够/金币不足/敌人已死）→ **if 判断，不用异常**（玩家可控 + 避免高频抛异常的性能灾难）
+- 意外（不可预判/外部环境）→ 异常：参数→Argument 家族 / 状态→InvalidOperation / IO 解析→IOException、FormatException（或包装） / 领域意外→自定义
+
+**两条铁律（第 7 章）**：
+1. 异常用于意外情况，不用来当流程控制
+2. 自定义异常按「调用方怎么处理」分类（一两个就够），不按「发生了什么」分类——`SaveLoadException` 一个类吃下所有存档错误
+
 ## 五、C# 异常语法补课（2026-08-20，作业前补）
 
 > 前置：用户不熟悉 C# 异常语法，作业前补一课机制。全程绑定存档加载场景。
