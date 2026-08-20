@@ -2,6 +2,7 @@ using StudyNotes.Models;
 using StudyNotes.Commands;
 using StudyNotes.Homework.Refactor.Level;
 using StudyNotes.Homework.Refactor.Legacy;
+using StudyNotes.Homework.CleanCode.Tests;
 
 // ====== 命令模式：移动命令系统（撤销 + 重放）======
 // 来源：设计模式/06-命令模式-Command.md 作业
@@ -42,3 +43,6 @@ LevelUpTests.Run();
 
 //结课测试
 LegacySaveSystemTest.Run();
+
+// ====== 代码整洁 Day 8：存档测试（F.I.R.S.T. 版）======
+CleanSaveTests.Run();

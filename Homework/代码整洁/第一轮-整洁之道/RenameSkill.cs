@@ -34,7 +34,7 @@ namespace StudyNotes.Homework.CleanCode.Renaming
             // 实际做了三件事：扣血结算、掉落、经验（名字必须反映这些）
             e.HP = 0;
             p.Exp += e.ExpReward;
-            DropLoot(e);
+            e.DropLoot(e);
         }
     }
 

@@ -73,6 +73,18 @@ public void LoadGame_文件不存在时_返回默认玩家()
 
 要点：一个测试一个行为；Given-When-Then 结构；`Assert` 自动判断（你 Day 14 的 LevelUpTests 就是这种模式）
 
+## 五、作业验收（2026-08-20，纠错第 1 轮）
+
+- ✅ 结构全对：Save/Load/独立三个测试分开、命名带行为、Assert 自动判断
+- ✅ 测试数据有区分度（playerTest1/playerTest2 数值不同）——这是能抓出 bug 的前提
+- ⚠️ 全 FAIL 的根源：`Player.Equals` 第 25 行 `var maxHpEquals = this.MaxHp.Equals(other.Hp);`——**MaxHp 和 other.Hp 比**，复制粘贴错误（应 `other.MaxHp`）。无 ReferenceEquals 短路，同名对象比较也逐字段硬比 → 必 FAIL
+- 教学点：测试当场抓到生产 bug——这正是 F.I.R.S.T. 的意义；若用 `==` 直接比引用，这个 bug 永远静默
+- 小提示：Player 加 Equals 属测试辅助改动（骨架铁律是别改 Player）——可接受，但更贴近铁律的做法是测试里逐字段断言
+
+### 第 2 轮（2026-08-20）✅ 通过
+- `MaxHp.Equals(other.Hp)` → `other.MaxHp` 修正
+- dotnet run：存档测试 3/3 PASS；顺带回补 Day 1 遗留债（RenameSkill.cs `DropLoot` → `e.DropLoot(e)`，构建恢复）
+
 ---
 
 `[进度：阶段四-代码整洁 → Day 8「单元测试整洁」苏格拉底问答中]`
