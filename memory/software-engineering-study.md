@@ -56,7 +56,7 @@ metadata:
 - docs/重构/02-坏味道-重复代码-DuplicatedCode.md
 - docs/重构/03-坏味道-过长函数-LongFunction.md
 
-**下一步**：阶段四 Day 8「单元测试整洁」（《代码整洁之道》第 9 章：F.I.R.S.T./自足验证/测试可读性）——苏格拉底场景已布置待回答。待还旧债：Day 1 RenameSkill.cs 回补（`e.DropLoot(e)` 编译错堵构建 + `damge` 拼写 + `sk`/`p` 参数 + TODO 残留）+ Day 7 边界作业 AdSdkBoundary.cs（2026-08-20 用户跳过问答，标准解已存档，作业留待回补）。阶段四三轮 12 天：整洁之道（命名/函数/注释/格式/对象）→ 干净地写（错误/边界/测试整洁/类）→ 遗留代码（接缝/依赖破坏/阶段考）
+**下一步**：阶段四 Day 8「单元测试整洁」——F.I.R.S.T. 标准解已给（Fast/Independent/Repeatable/Self-Validating/Timely），作业 CleanSaveTests.cs 待做。待还旧债：Day 1 RenameSkill.cs 回补（`e.DropLoot(e)` 编译错堵构建 + `damge` 拼写 + `sk`/`p` 参数 + TODO 残留）+ Day 7 边界作业 AdSdkBoundary.cs 留待回补。阶段四三轮 12 天：整洁之道（命名/函数/注释/格式/对象）→ 干净地写（错误/边界/测试整洁/类）→ 遗留代码（接缝/依赖破坏/阶段考）
 
 ### Day 6：错误处理 ✅（2026-08-20 收官）
 - 概念：Q1 基本过（信息少/静默）、Q2 纠 1 轮（调用栈=定位利器）、Q3 异常包装标准解已给

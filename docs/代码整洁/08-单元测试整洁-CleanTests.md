@@ -27,13 +27,51 @@ public void TestSave()
 2. 测试跑完输出 "pass"——你真的放心吗？**测试失败时你能立刻知道哪个行为坏了吗**？（提示：自足验证 Self-Validating——测试应该自己说 PASS/FAIL，不是靠人眼读输出）
 3. F.I.R.S.T. 是什么？逐条对上这个测试，它违背了哪几条？
 
-## 三、你的回答（待填写）
+## 三、你的回答（2026-08-20，同步自 00-我的回答.md）
 
-（等你回答）
+1. 测试输出不清楚，单是 PASS/FAIL 搞成测试名称+通过或失败；流程耦合 save load 应该是两个不同的测试，不然不好定位是 save 还是 load 的问题导致的错误
+2. （并入 1）
+3. 不清楚 F.I.R.S.T.
 
-## 四、标准解（待给出）
+## 三·五、验收与补课（2026-08-20）
 
-（回答后给出）
+- ✅ Q1 两个核心全抓：命名不清 + **save/load 拆分成独立测试**（定位问题源）
+- ⚠️ Q2 半对：输出要带测试名 ✓，但没到「断言自动判断」——`Console.WriteLine` + 人眼读 = 不自足验证（Self-Validating）
+- Q3 请求讲解 → 标准解直接给出
+
+## 四、标准解（2026-08-20）
+
+### F.I.R.S.T.（《代码整洁之道》第 9 章）——逐条对上坏场景
+
+| 字母 | 含义 | 坏场景怎么违背 |
+|------|------|----------------|
+| F | Fast 快速 | SaveGame 写真实磁盘——慢；测试应该毫秒级 |
+| I | Independent 独立 | save+load 耦合在一个测试——改 Save 影响 Load 的结果 |
+| R | Repeatable 可重复 | 依赖真实文件/全局状态——换机器、换顺序结果可能不同 |
+| S | Self-Validating 自足验证 | `Console.WriteLine("pass")` 靠人眼读——测试必须自动说红/绿 |
+| T | Timely 及时 | 测试应该和生产代码同步写（TDD 三定律） |
+
+### 干净版（标准答案）
+
+```csharp
+public void SaveGame_保存后玩家数据可完整读回_血量一致()
+{
+    // Given：造一个 100 血的玩家
+    var p = new Player { Hp = 100 };
+    // When：保存再读取
+    SaveGame(p);
+    var p2 = LoadGame();
+    // Then：断言——自动判断，红/绿
+    Assert(p2.Hp == 100, "血量往返一致");
+}
+
+public void LoadGame_文件不存在时_返回默认玩家()
+{
+    Assert(LoadGame("/nonexist") == null, "缺失存档返回空");
+}
+```
+
+要点：一个测试一个行为；Given-When-Then 结构；`Assert` 自动判断（你 Day 14 的 LevelUpTests 就是这种模式）
 
 ---
 
