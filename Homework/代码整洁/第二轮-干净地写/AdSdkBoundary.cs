@@ -28,25 +28,76 @@ namespace StudyNotes.Homework.CleanCode.Boundary
     public interface IRewardedAd
     {
         // 你定义（提示：IsReady / Show / 奖励成功、失败事件）
+        // 开启广告
+        public bool Show();
+        public bool GetReward(Action reward);
     }
 
     // TODO 2: 包装器——翻译 SDK 的怪癖，把丑 API 变成干净的契约
     public class RewardedAd : IRewardedAd
     {
         private readonly RewardedAdSdk _sdk = new();
+        private bool _canGetReward = false;
+        public RewardedAd(string appId)
+        {
+            this._sdk = new RewardedAdSdk();
+            _sdk.SDK_Init(appId);
+        }
 
-        // 你实现
+        public bool GetReward(Action reward)
+        {
+            _sdk.Set_Listener(SetCanGetReward);
+            if (_canGetReward)
+            {
+                reward?.Invoke();
+                return true;
+            }
+            return false;
+        }
+
+        public bool Show()
+        {
+            if (_sdk.Get_State() == 2)
+            {
+                _sdk.SDK_Show();
+                return true;
+            }
+            return false;
+        }
+
+        private void SetCanGetReward(int state)
+        {
+            if (state == 1)
+            {
+                _canGetReward = true;
+            }
+        }
+
+
     }
 
-    // TODO 3: 使用方——这段代码里不允许出现 RewardedAdSdk 字样
+    /// 广告奖励流程不清晰
+    /// 点击观看广告 -> 播放广告 -> 等待一段时间 -> 显示领取按钮
     public class AdManager
     {
         private readonly IRewardedAd _ad;
         public AdManager(IRewardedAd ad) { _ad = ad; }
 
-        public void PlayerClickedWatchAd()
+        public async void PlayerClickedWatchAd()
         {
-            // 就绪才展示；奖励事件 → 发金币
+            //等待广告加载
+            _ad.Show();
+        }
+
+        public void PlayerClickedRewardAd()
+        {
+            //判断广告观看时间尝试领取奖励
+            _ad.GetReward(GetReward);
+        }
+
+        private void GetReward()
+        {
+
         }
     }
 }

@@ -8,10 +8,10 @@ namespace StudyNotes.Homework.CleanCode.Renaming
     /// </summary>
     public class SkillData
     {
-        public int damage;       
-        public float range;       
-        public bool canHitFriend;       
-        public int baseCoolDown;        
+        public int damage;
+        public float range;
+        public bool canHitFriend;
+        public int baseCoolDown;
     }
 
     public class SkillSystem
